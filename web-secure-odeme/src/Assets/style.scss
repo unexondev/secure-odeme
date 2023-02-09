@@ -1,0 +1,98 @@
+$primary: #D65A31;
+$secondary: #393E46;
+$modal-content-bg: $secondary;
+$form-check-input-bg: $secondary;
+$form-check-input-border: none;
+$input-focus-border-color: none;
+$input-btn-focus-box-shadow: none;
+
+
+@import "../../node_modules/bootstrap/scss/bootstrap";
+
+@font-face {
+  font-family: "Ubuntu";
+  src: local("Ubuntu"), url("./Fonts/Ubuntu-Regular.ttf") format("truetype");
+}
+
+* {
+
+	box-sizing: border-box;
+
+}
+
+html, body {
+
+	margin: 0; padding: 0;
+
+	height: 100%;
+
+}
+
+body {
+
+	font-family: "Ubuntu";
+
+	background-color: #222831;
+
+}
+
+#root {
+
+	height: 100%;
+
+}
+
+button:focus {
+    outline: none !important;
+    outline-offset: none !important;
+}
+
+.input-login {
+
+	transition: none;
+
+}
+
+.input-login:focus {
+
+	border-right-color: transparent !important;
+	border-top-color: transparent !important;
+	border-bottom-color: transparent !important;
+	border-radius: 0 !important;
+	box-shadow: none !important;
+
+}
+
+.navigate-menu { 
+
+	display: none;
+
+}
+
+.no-toggle::after {
+
+	display: none;
+
+}
+
+@media only screen and (max-width: 1000px) {
+
+	.navbar-brand > small {
+
+		display: none;
+
+	}
+
+	.navigate-menu-wide {
+
+		display: none;
+
+	}
+
+	.navigate-menu { 
+
+		display: block;
+
+	}	
+
+}
