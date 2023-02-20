@@ -16,6 +16,86 @@ use App\Models\Link;
 class LinkController extends Controller
 {
     
+    // Admin functions defined here
+
+    public function _fetch(Request $request) {
+
+        $validator = Validator::make($request->all(), [
+            "sort_attrs" => "required|array"
+        ], [
+            "sort_attrs" => "Filtreleme için bazı nitelikler belirtmeniz gerekiyor."
+        ]);
+
+        if ($validator->fails()) {
+
+            $err = $validator->errors()->first();
+
+            return response()->json([ "message" => $err ], 400);
+
+        }
+
+        $sort_attrs = $request->sort_attrs;
+
+        foreach ($sort_attrs as $attr => $value) {
+
+            if ($value == null)
+                unset($sort_attrs[$attr]);
+
+        }
+
+        return response()->json([ "entries" => Link::where($sort_attrs)->get() ]);
+
+    }
+
+    public function __remove(Request $request) {
+
+        $validator = Validator::make($request->all(), [
+            "id" => "required|uuid|exists:links"
+        ], [
+            "id" => "Veri silme işlemi için geçerli bir ID belirtmeniz gerekiyor."
+        ]);
+
+        if ($validator->fails()) {
+
+            $err = $validator->errors()->first();
+
+            return response()->json([ "message" => $err ], 400);
+
+        }
+
+        Storage::disk("public")->deleteDirectory("links/$link->id/images");
+
+        Link::where("id", $request->id)->delete();
+
+    }
+
+    public function _update(Request $request) {
+
+        $validator = Validator::make($request->all(), [
+            "id" => "required|uuid|exists:links"
+        ], [
+            "id" => "Veri güncelleme işlemi için geçerli bir ID belirtmeniz gerekiyor."
+        ]);
+
+        if ($validator->fails()) {
+
+            $err = $validator->errors()->first();
+
+            return response()->json([ "message" => $err ], 400);
+
+        }
+
+        $entry = $request->all();
+
+        unset($entry["created_at"]);
+        unset($entry["updated_at"]);
+
+        Link::where("id", $request->id)->update($entry);
+
+    }
+
+    // ----------------
+
     public function fetch(Request $request) { 
 
         $user = $request->user();
@@ -158,7 +238,7 @@ class LinkController extends Controller
 
         $query->delete();
 
-        Storage::disk("public")->deleteDirectory("links/$link->id");
+        Storage::disk("public")->deleteDirectory("links/$link->id/images");
 
     }
 

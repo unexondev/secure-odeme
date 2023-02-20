@@ -2,14 +2,19 @@
 
 namespace App\Models;
 
+// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 
-class Admin extends Model
+class Admin extends Authenticatable
 {
-    use HasFactory, HasUuids;
+    use HasApiTokens, HasFactory, Notifiable, HasUuids;
 
-    protected $guarded = [];
+    protected $fillable = [ "username", "password" ];
+
 }

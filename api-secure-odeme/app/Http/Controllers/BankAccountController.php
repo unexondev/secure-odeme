@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-use App\Models\User;
+use App\Models\BankAccount;
 
 
-class UserController extends Controller
+class BankAccountController extends Controller
 {
     
     // Admin functions defined here
@@ -38,14 +38,14 @@ class UserController extends Controller
 
         }
 
-        return response()->json([ "entries" => User::where($sort_attrs)->get() ]);
+        return response()->json([ "entries" => BankAccount::where($sort_attrs)->get() ]);
 
-    }
+    } 
 
     public function _remove(Request $request) {
 
         $validator = Validator::make($request->all(), [
-            "id" => "required|uuid|exists:users"
+            "id" => "required|uuid|exists:bank_accounts"
         ], [
             "id" => "Veri silme işlemi için geçerli bir ID belirtmeniz gerekiyor."
         ]);
@@ -58,14 +58,38 @@ class UserController extends Controller
 
         }
 
-        User::where("id", $request->id)->delete();
+        BankAccount::where("id", $request->id)->delete();
+
+    }
+
+    public function _create(Request $request) {
+
+        $validator = Validator::make($request->all(), [
+            "bank" => "required|string",
+            "account_number" => "required|string",
+            "holder" => "required|string"
+        ], [
+            "refcode" => "Veri oluşturma işlemi için geçerli bir referans kodu belirtmeniz gerekiyor.",
+            "account_number" => "Veri oluşturma işlemi için geçerli bir IBAN belirtmeniz gerekiyor.",
+            "holder" => "Veri oluşturma işlemi için geçerli bir hesap sahibi belirtmeniz gerekiyor."
+        ]);
+
+        if ($validator->fails()) {
+
+            $err = $validator->errors()->first();
+
+            return response()->json([ "message" => $err ], 400);
+
+        }
+
+        BankAccount::create($request->all());
 
     }
 
     public function _update(Request $request) {
 
         $validator = Validator::make($request->all(), [
-            "id" => "required|uuid|exists:users"
+            "id" => "required|uuid|exists:bank_accounts"
         ], [
             "id" => "Veri güncelleme işlemi için geçerli bir ID belirtmeniz gerekiyor."
         ]);
@@ -83,42 +107,10 @@ class UserController extends Controller
         unset($entry["created_at"]);
         unset($entry["updated_at"]);
 
-        User::where("id", $request->id)->update($entry);
+        BankAccount::where("id", $request->id)->update($entry);
 
     }
 
     // ----------------
-
-    public function fetch(Request $request) {
-        
-        $user = $request->user();
-        unset($user["password"], $user["remember_token"]);
-
-        return [ "user" => $user ];
-
-    }
-
-    public function set_btc_address(Request $request) {
-
-        $validator = Validator::make($request->all(), [
-            "btc_address" => "required|string|min:26|max:35"
-        ], [
-            "btc_address" => "Hesabınıza tanımlanması için geçerli bir bitcoin adresi belirtmeniz gerekiyor."
-        ]);
-
-        if ($validator->fails()) {
-
-            $err = $validator->errors()->first();
-
-            return response()->json([ "message" => $err ], 400);
-
-        }
-
-        $user = $request->user();
-
-        $user->btc_address = $request->btc_address;
-        $user->save();
-
-    }
 
 }

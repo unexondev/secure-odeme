@@ -87,7 +87,7 @@ class Links extends Component {
 
 	OnRemoveProperty(idx) {
 
-		this.setState({ "product_info": { ...this.state["product_info"], "properties": this.state["product_info"]["properties"].filter(entry => entry.index != idx) } });
+		this.setState({ "product_info": { ...this.state["product_info"], "properties": this.state["product_info"]["properties"].filter(entry => entry["index"] != idx) } });
 
 	}
 
@@ -397,7 +397,7 @@ class Links extends Component {
 										<Modal>
 									
 											<ModalBS.Header className="border-0" closeButton>
-												<ModalBS.Title className="text-primary">
+												<ModalBS.Title className="text-dark">
 													Link oluştur
 												</ModalBS.Title>
 											</ModalBS.Header>

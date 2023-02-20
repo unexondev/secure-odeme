@@ -14,6 +14,6 @@ class Payment extends Model
     use HasFactory, HasUuids;
 
 
-    protected $fillable = [ "owner_id", "link_id", "amount", "to_bank"  ];
+    protected $fillable = [ "owner_id", "link_id", "bank_account_id", "amount" ];
 
 }

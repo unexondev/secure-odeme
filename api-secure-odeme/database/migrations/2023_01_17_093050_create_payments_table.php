@@ -17,9 +17,9 @@ return new class extends Migration
             $table->uuid("id");
             $table->uuid("owner_id")->nullable(false);
             $table->uuid("link_id")->nullable(false);
+            $table->uuid("bank_account_id")->nullable(false);
             $table->integer("amount")->nullable(false);
             $table->boolean("verified")->default(false)->nullable(false);
-            $table->uuid("to_bank")->nullable(false);
             $table->timestamps();
         });
     }

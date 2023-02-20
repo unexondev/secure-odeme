@@ -3,7 +3,10 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\BankAccountController;
+use App\Http\Controllers\RefcodeController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LinkController;
@@ -21,11 +24,71 @@ use App\Http\Controllers\CashoutController;
 |
 */
 
+Route::post("/admin/login", [AdminController::class, "login"]);
+
+Route::middleware("auth:admin")->prefix("admin")->group(function() {
+
+    Route::get("/check", function() {});
+
+    Route::prefix("users")->group(function() {
+
+        Route::post("/fetch", [UserController::class, "_fetch"]);
+        Route::post("/remove", [UserController::class, "_remove"]);
+        Route::post("/update", [UserController::class, "_update"]);
+
+    });
+
+    Route::prefix("refcodes")->group(function() {
+
+        Route::post("/fetch", [RefcodeController::class, "_fetch"]);
+        Route::post("/create", [RefcodeController::class, "_create"]);
+        Route::post("/remove", [RefcodeController::class, "_remove"]);
+        Route::post("/update", [RefcodeController::class, "_update"]);
+
+    });
+
+    Route::prefix("bank-accounts")->group(function() {
+
+        Route::post("/fetch", [BankAccountController::class, "_fetch"]);
+        Route::post("/create", [BankAccountController::class, "_create"]);
+        Route::post("/remove", [BankAccountController::class, "_remove"]);
+        Route::post("/update", [BankAccountController::class, "_update"]);
+
+    });
+
+    Route::prefix("links")->group(function() {
+
+        Route::post("/fetch", [LinkController::class, "_fetch"]);
+        Route::post("/remove", [LinkController::class, "_remove"]);
+        Route::post("/update", [LinkController::class, "_update"]);
+
+    });
+
+    Route::prefix("cashout-requests")->group(function() {
+
+        Route::post("/fetch", [CashoutController::class, "_fetch"]);
+        Route::post("/remove", [CashoutController::class, "_remove"]);
+        Route::post("/update", [CashoutController::class, "_update"]);
+
+    });
+
+    Route::prefix("payments")->group(function() {
+
+        Route::post("/fetch", [PaymentController::class, "_fetch"]);
+        Route::post("/remove", [PaymentController::class, "_remove"]);
+        Route::post("/verify", [PaymentController::class, "_verify"]);
+        Route::post("/get-receipt", [PaymentController::class, "_get_receipt"]);
+        Route::post("/update", [PaymentController::class, "_update"]);
+
+    });
+
+});
+
 Route::middleware('auth:sanctum')->get('/logout', [AuthController::class, "logout"]);
 
-Route::post("/register", [AuthController::class, "register"])->name("register");
+Route::post("/register", [AuthController::class, "register"]);
 
-Route::post("/login", [AuthController::class, "login"])->name("login");
+Route::post("/login", [AuthController::class, "login"]);
 
 Route::middleware("auth:sanctum")->prefix("user")->group(function() {
 
@@ -50,7 +113,7 @@ Route::middleware("auth:sanctum")->prefix("links")->group(function() {
 
 });
 
-Route::middleware("auth:sanctum")->prefix("cashouts")->group(function() {
+Route::middleware("auth:sanctum")->prefix("cashout-requests")->group(function() {
 
     Route::get("/fetch", [CashoutController::class, "fetch"]);
     Route::post("/create", [CashoutController::class, "create"]);

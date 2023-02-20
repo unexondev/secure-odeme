@@ -29,7 +29,7 @@ class Cashout extends Component {
 
 	componentDidMount() {
 
-		axios.get("/api/cashouts/fetch").then(((response) => {
+		axios.get("/api/cashout-requests/fetch").then(((response) => {
 
 			this.setState({ "cashout_requests": response.data, "cashout_requests_retrieved": true });
 
@@ -50,7 +50,7 @@ class Cashout extends Component {
 
 		this.setState({ "create_request_busy": true });
 
-		axios.post("/api/cashouts/create", {
+		axios.post("/api/cashout-requests/create", {
 			"amount": this.state["amount"]
 		}).then(((response) => {
 
@@ -78,7 +78,7 @@ class Cashout extends Component {
 
 		this.setState({ "delete_request_busy": true });
 
-		axios.post("/api/cashouts/delete", {
+		axios.post("/api/cashout-requests/delete", {
 		
 			"request_id": id
 		

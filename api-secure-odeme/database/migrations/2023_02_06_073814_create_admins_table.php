@@ -18,6 +18,7 @@ return new class extends Migration
             $table->uuid("id");
             $table->string("username")->nullable(false);
             $table->string("password")->nullable(false);
+            $table->timestamps();
         });
     }
 

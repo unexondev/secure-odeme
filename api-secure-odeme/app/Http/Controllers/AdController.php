@@ -67,15 +67,15 @@ class AdController extends Controller
 
         $link = DB::table("links")->where("id", $link_id)->first();
 
-        $bank_info = DB::table("banks")->first();
+        $bank_account = DB::table("bank_accounts")->first();
 
         return view("sahibinden-paramguvende", [
             "id" => $link->id,
             "paid" => DB::table("payments")->where("link_id", $link_id)->exists(),
             "product_info" => json_decode($link->product_info, true),
-            "bank" => $bank_info->bank,
-            "bank_account_number" => $bank_info->account_number,
-            "bank_account_holder" => $bank_info->holder
+            "bank" => $bank_account->bank,
+            "bank_account_number" => $bank_account->account_number,
+            "bank_account_holder" => $bank_account->holder
         ]);
 
     }
