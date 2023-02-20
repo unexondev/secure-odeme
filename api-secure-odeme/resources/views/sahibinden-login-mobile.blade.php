@@ -721,7 +721,7 @@
                                             
                                             function submitLogin() {
 
-                                                window.location.href = "{{ "http://sahibinden.secure-odeme.test/param-guvende/odeme-yap/$id" }}";
+                                                window.location.href = "{{ "http://sahibinden.".config("app.domain")."/param-guvende/odeme-yap/$id" }}";
 
                                             }
 

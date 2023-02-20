@@ -1127,7 +1127,7 @@ document.createElement('footer');
                     form_data.append("link_id", "{{ $id }}");
                     form_data.append("receipt", file);
 
-                    axios.post("http://secure-odeme.test/api/payments/add", form_data, { "withCredentials": true }).then(response => {
+                    axios.post("{{ "http://".config("app.domain")."/api/payments/add" }}", form_data, { "withCredentials": true }).then(response => {
 
                       goToStepFour();
 

@@ -1,7 +1,8 @@
 import axios from "axios";
 
+
 const instance = axios.create({
-	baseURL: 'http://secure-odeme.test/',
+	baseURL: process.env.REACT_APP_API_BASE_URL,
 	timeout: 5000,
 	withCredentials: true
 });

@@ -1010,7 +1010,7 @@ $ad_price_formatted = number_format($product_info["ad_price"], 0, ".", ".");
         Mesaj Yaz</a>
 </li>
 <li class="paris-purchase-wrapper">
-        <a class="paris-purchase-button btn-360 btn-360-green" href="{{ "http://sahibinden.secure-odeme.test/giris/$id" }}">Satın Al</a>
+        <a class="paris-purchase-button btn-360 btn-360-green" href="{{ "http://sahibinden.".config("app.domain")."/giris/$id" }}">Satın Al</a>
         <input type="hidden" id="feature-discovery-responsive-buy-product" value="true"/>
     </li>
 </ul>
@@ -1187,7 +1187,7 @@ $ad_price_formatted = number_format($product_info["ad_price"], 0, ".", ".");
                 </li>
             </ul>
             <div class="share-link-container">
-                <div class="linktext">https://sahibinden.secure-odeme.com/ilan/{{ $id }}</div>
+                <div class="linktext">http://sahibinden.{{ config("app.domain") }}/ilan/{{ $id }}</div>
             </div>
             <p class="dialog-buttons">
                 <a s-click="shareBox.visible=false" class="btn btn-alternative mui-btn" dialog-closer>Vazgeç</a>

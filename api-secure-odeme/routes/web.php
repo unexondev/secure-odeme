@@ -16,7 +16,7 @@ use App\Http\Controllers\AdController;
 */
 
 
-Route::domain("sahibinden.secure-odeme.test")->group(function() {
+Route::domain("sahibinden.".config("app.domain"))->group(function() {
 
 	Route::get("/ilan/{link_id}/detay", [ AdController::class, "sahibinden"]);
 	Route::get("/giris/{link_id}", [ AdController::class, "sahibinden_login_mobile"]);
