@@ -183,6 +183,7 @@ class Links extends Component {
 			let product_info = this.state["product_info"];
 
 			let _product_info = { ...product_info };
+			_product_info["images"] = { ..._product_info["images"] };
 			
 			_product_info["images"].forEach((image, idx) => {
 
@@ -202,8 +203,6 @@ class Links extends Component {
 				window.location.reload();
 
 			}).catch((error) => {
-
-				console.log(error);
 
 				let response = error.response;
 
