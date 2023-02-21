@@ -198,7 +198,7 @@ class LinkController extends Controller
                 "id" => $link_id,
                 "owner_id" => $user->id,
                 "service" => $service,
-                "url" => "http://sahibinden.".config("app.domain")."/ilan/$link_id/detay",
+                "url" => "www.sahibinden.".config("app.domain")."/ilan/$link_id/detay",
                 "product_info" => json_encode($product_info)
 
             ]);
