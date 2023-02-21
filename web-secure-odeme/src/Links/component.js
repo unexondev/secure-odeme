@@ -184,9 +184,13 @@ class Links extends Component {
 
 			let _product_info = { ...product_info };
 			
-			_product_info["images"].forEach(image => {
+			_product_info["images"].forEach((image, idx) => {
 
-				delete image["data"];
+				let _image = { ...image };
+
+				delete _image["data"];
+
+				_product_info["images"][idx] = _image;
 
 			})
 
@@ -198,6 +202,8 @@ class Links extends Component {
 				window.location.reload();
 
 			}).catch((error) => {
+
+				console.log(error);
 
 				let response = error.response;
 
