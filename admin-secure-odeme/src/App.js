@@ -1,6 +1,7 @@
 import React, { Component, Suspense } from "react";
 import { BrowserRouter as Router, Route, Switch, Routes, Navigate } from "react-router-dom";
 import axios from "./Assets/Components/AxiosInstance/component.js";
+import { Helmet } from "react-helmet";
 
 // Import assets
 import "./Assets/style.scss";
@@ -35,10 +36,6 @@ class App extends Component {
 	}
 	componentDidMount() {
 
-		// Set document title
-
-		document.title = "AnyProject v1.0";
-
 		// Check admin rights
 
 		axios.get("/api/admin/check").then(((response) => {
@@ -56,18 +53,28 @@ class App extends Component {
 	render() {
 
 		return (
-			this.state["authorized"] == null ? <Fallback/> : (
 			<>
+				<Helmet>
+					<title>AnyProject v1.0</title>
+				</Helmet>
+
 				{
 
-					this.state["authorized"] ?
-						<ImportComponent path="./Panel/component.js"/> : <ImportComponent path="./Login/component.js"/>
+					this.state["authorized"] == null ? <Fallback/> : (
+						<>
+							{
+
+								this.state["authorized"] ?
+									<ImportComponent path="./Panel/component.js"/> : <ImportComponent path="./Login/component.js"/>
+
+							}
+
+							<Notifier/>
+						</>
+					)
 
 				}
-
-				<Notifier/>
 			</>
-			)
 		);
 
 	}

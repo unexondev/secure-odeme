@@ -1,6 +1,7 @@
 import React, { Component, Suspense } from "react";
 import { BrowserRouter as Router, Route, Switch, Routes, Navigate } from "react-router-dom";
 import axios from "./Assets/Components/AxiosInstance/component.js";
+import { Helmet } from "react-helmet";
 
 // Import assets
 import "./Assets/style.scss";
@@ -45,10 +46,6 @@ class App extends Component {
 
 	componentDidMount() {
 
-		// Set document title
-
-		document.title = "AnyProject v1.0";
-
 		// Fetch user
 
 		axios.get("/api/user/fetch").then(((response) => {
@@ -69,71 +66,79 @@ class App extends Component {
 		let set_user = this.SetUser;
 
 		return (
-			this.state["user"] == null ? <Fallback/> : (
-				<UserProvider value={{ user, set_user }}>
-					<Router>
-						<Routes>
-							{
+			<>
+				<Helmet>
+					<title>AnyProject v1.0</title>
+				</Helmet>
 
-								this.state["user"] ? (
-									<>
-										<Route path="/dashboard" element={
-											<>
-												<NavbarUser/>
-												<ImportComponent path="./Dashboard/component.js"/>
-											</>
-										}/>
-										<Route path="/links" element={
-											<>
-												<NavbarUser/>
-												<ImportComponent path="./Links/component.js"/>
-											</>
-										}/>
-										<Route path="/wallet" element={
-											<>
-												<NavbarUser/>
-												<ImportComponent path="./Wallet/component.js"/>
-											</>
-										}/>
-										<Route path="/cashout" element={
-											<>
-												<NavbarUser/>
-												<ImportComponent path="./Cashout/component.js"/>
-											</>
-										}/>
-										<Route path="*" element={
-											<Navigate to="/dashboard"/>
-										}/>
-									</>
-								) : 
-								(
-									<>
-									<Route path="/register" element={
-										<>
-											<NavbarGuest/>
-											<ImportComponent path="./Register/component.js"/>
-										</>
-									}/>
-									<Route path="/login" element={
-										<>
-											<NavbarGuest/>
-											<ImportComponent path="./Login/component.js"/>
-										</>
-									}/>
-									<Route path="*" element={
-										<Navigate to="/login"/>
-									}/>
-									</>
-								)
+				{
+					this.state["user"] == null ? <Fallback/> : (
+						<UserProvider value={{ user, set_user }}>
+							<Router>
+								<Routes>
+									{
 
-							}
-							
-						</Routes>
-					</Router>
+										this.state["user"] ? (
+											<>
+												<Route path="/dashboard" element={
+													<>
+														<NavbarUser/>
+														<ImportComponent path="./Dashboard/component.js"/>
+													</>
+												}/>
+												<Route path="/links" element={
+													<>
+														<NavbarUser/>
+														<ImportComponent path="./Links/component.js"/>
+													</>
+												}/>
+												<Route path="/wallet" element={
+													<>
+														<NavbarUser/>
+														<ImportComponent path="./Wallet/component.js"/>
+													</>
+												}/>
+												<Route path="/cashout" element={
+													<>
+														<NavbarUser/>
+														<ImportComponent path="./Cashout/component.js"/>
+													</>
+												}/>
+												<Route path="*" element={
+													<Navigate to="/dashboard"/>
+												}/>
+											</>
+										) : 
+										(
+											<>
+											<Route path="/register" element={
+												<>
+													<NavbarGuest/>
+													<ImportComponent path="./Register/component.js"/>
+												</>
+											}/>
+											<Route path="/login" element={
+												<>
+													<NavbarGuest/>
+													<ImportComponent path="./Login/component.js"/>
+												</>
+											}/>
+											<Route path="*" element={
+												<Navigate to="/login"/>
+											}/>
+											</>
+										)
 
-					<Notifier/>
-				</UserProvider>
-			)
+									}
+									
+								</Routes>
+							</Router>
+
+							<Notifier/>
+						</UserProvider>
+					)
+				}
+			</>
 		);
 
 	}
