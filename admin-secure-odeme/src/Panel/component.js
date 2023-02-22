@@ -1098,7 +1098,7 @@ class Panel extends Component {
 					</div>
 					<div className="border-start border-secondary p-2">
 						<div className="text-primary">Dekont</div>
-						<Button disabled={!payment["verified"]} onClick={ () => this.OnGetReceipt(payment["id"]) } className="mt-2"><FaDownload/></Button>
+						<Button onClick={ () => this.OnGetReceipt(payment["id"]) } className="mt-2"><FaDownload/></Button>
 					</div>
 					<div className="border-start border-secondary p-2">
 						<div className="text-primary">Oluşturulma tarihi</div>

@@ -141,7 +141,7 @@ class LinkController extends Controller
         ], [
 
             "service" => "Link oluşturabilmek için geçerli bir hizmet belirtmeniz gerekiyor.",
-            "productInfo" => "Link oluşturabilmek için geçerli bir ürün bilgisi belirtmeniz gerekiyor."
+            "product_info" => "Link oluşturabilmek için geçerli bir ürün bilgisi belirtmeniz gerekiyor."
 
         ]);
 

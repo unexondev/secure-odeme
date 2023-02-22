@@ -168,6 +168,16 @@ class Links extends Component {
 
 			let product_info = this.state["product_info"];
 
+			product_info["properties"].forEach((property, idx) => {
+
+				if (!property["property"] || !property["value"]) {
+
+					product_info["properties"].splice(idx, 1);
+
+				}
+
+			});
+
 			let _product_info = { ...product_info };
 
 			delete _product_info["images"];
