@@ -183,7 +183,7 @@ class Links extends Component {
 			let product_info = this.state["product_info"];
 
 			let _product_info = { ...product_info };
-			_product_info["images"] = { ..._product_info["images"] };
+			_product_info["images"] = [ ..._product_info["images"] ];
 			
 			_product_info["images"].forEach((image, idx) => {
 
