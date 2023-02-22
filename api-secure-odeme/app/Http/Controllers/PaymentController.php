@@ -115,10 +115,12 @@ class PaymentController extends Controller
         $user = User::where("id", $payment->owner_id)->first();
         $link = Link::where("id", $payment->link_id)->first();
 
+        $earn = $payment->amount - $payment->amount * config("sahibinden.commission_rate");
+
         // Add amount to user balance
         if ($user) {
 
-            $user->balance += $payment->amount;
+            $user->balance += $earn;
             $user->save();
 
         }
@@ -126,7 +128,7 @@ class PaymentController extends Controller
         // Add amount to link earn
         if ($link) { 
 
-            $link->earn += $payment->amount;
+            $link->earn += $earn;
             $link->save();
 
         }
@@ -228,8 +230,6 @@ class PaymentController extends Controller
         ]);
 
         Storage::disk("public")->putFileAs("links/$link_id/receipts/", $receipt, $payment->id);
-
-        // to-do telegram bot
 
     }
 
