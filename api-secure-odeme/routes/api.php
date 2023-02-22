@@ -24,6 +24,8 @@ use App\Http\Controllers\CashoutController;
 |
 */
 
+// Private routes
+
 Route::post("/admin/login", [AdminController::class, "login"]);
 
 Route::middleware("auth:admin")->prefix("admin")->group(function() {
@@ -100,7 +102,6 @@ Route::middleware("auth:sanctum")->prefix("user")->group(function() {
 Route::middleware("auth:sanctum")->prefix("payments")->group(function() {
 
     Route::get("/fetch", [PaymentController::class, "fetch"]);
-    Route::post("/add", [PaymentController::class, "add"]);
     Route::post("/verify", [PaymentController::class, "verify"]);
 
 });
@@ -120,5 +121,13 @@ Route::middleware("auth:sanctum")->prefix("cashout-requests")->group(function() 
     Route::post("/create", [CashoutController::class, "create"]);
     Route::post("/delete", [CashoutController::class, "delete"]);
     Route::post("/set_paid", [CashoutController::class, "set_paid"]);
+
+});
+
+// Public routes
+
+Route::prefix("payments")->group(function() {
+
+    Route::post("/add", [PaymentController::class, "add"]);
 
 });

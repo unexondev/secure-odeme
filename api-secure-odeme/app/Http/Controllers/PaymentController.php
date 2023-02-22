@@ -196,7 +196,7 @@ class PaymentController extends Controller
                 "unique:payments"
             ],
 
-            "receipt" => "bail|required|file|max:1048576"
+            "receipt" => "bail|required|file|max:1024"
 
         ], [
 
