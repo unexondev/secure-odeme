@@ -137,9 +137,7 @@ class LinkController extends Controller
             "product_info.ad_district" => "bail|required|string|between:2,30",
             "product_info.properties" => "bail|array|max:20",
             "product_info.properties.*.property" => "bail|required|string|between:1,30",
-            "product_info.properties.*.value" => "bail|required|string|between:1,30",
-            "product_info.images" => "bail|required|array|between:1,10",
-            "product_info.images.*" => "bail|required|array|max:1048576"
+            "product_info.properties.*.value" => "bail|required|string|between:1,30"
         ], [
 
             "service" => "Link oluşturabilmek için geçerli bir hizmet belirtmeniz gerekiyor.",
@@ -172,26 +170,8 @@ class LinkController extends Controller
             $ad_town = $product_info["ad_town"];
             $ad_district = $product_info["ad_district"];
             $properties = $product_info["properties"];
-            $images = $product_info["images"];
-
-            // Save images in corresponding user folders
 
             $link_id = Str::uuid();
-
-            foreach ($images as $image) { 
-
-                $buffer = $image["buffer"];
-
-                $data = implode(array_map("chr", $buffer));
-
-                Storage::disk("public")->put("links/$link_id/images/".$image["index"], $data);
-
-                unset($image["buffer"]);
-                unset($image["name"]);
-
-                $image["size"] = count($buffer);
-
-            }
 
             $link = Link::create([
                 
@@ -203,10 +183,59 @@ class LinkController extends Controller
 
             ]);
 
-            break;
+            return response()->json([ "link_id" => $link->id ], 200);
 
         case 2:
             break;
+
+        }
+
+    }
+
+    public function set_ad_images(Request $request) {
+
+        $user = $request->user();
+
+        $validator = Validator::make($request->all(), [
+            "link_id" => [
+                "bail",
+                "required",
+                "uuid",
+                Rule::exists("links", "id")->where("owner_id", $user->id)
+            ],
+            "files" => "bail|required|array|between:1,10",
+            "files.*" => "bail|required|file|mimes:jpeg,jpg,png|max:1024"
+        ], [
+            "link_id" => "İlan fotoğraflarını belirtmek için geçerli bir ID belirtmeniz gerekiyor.",
+            "files" => "İlanda kullanılması için geçerli ürün fotoğrafları belirtmeniz gerekiyor."
+        ]);
+
+        if ($validator->fails()) {
+
+            $err = $validator->errors()->first();
+
+            return response()->json([ "message" => $err ], 400);
+
+        }
+
+        $link = Link::where("id", $request->link_id)->first();
+
+        $files = $request->file("files");
+
+        if (count($files) != json_decode($link->product_info)->image_count) {
+
+            return response()->json([
+                "message" => "Belirtmiş olduğunuz ilan fotoğrafı sayısından farklı sayıda fotoğraf belirttiniz."
+            ], 400);
+
+        }
+
+        $index = 0;
+        foreach ($files as $file) {
+
+            Storage::disk("public")->putFileAs("links/$link->id/images/", $file, $index);
+
+            $index++;
 
         }
 

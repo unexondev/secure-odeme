@@ -52,6 +52,8 @@ class Links extends Component {
 				"ad_town": "",
 				"ad_district": "",
 				"properties": [],
+				"image_count": 0,
+				"files": [],
 				"images": []
 
 			};
@@ -109,6 +111,8 @@ class Links extends Component {
 
 	OnAddImage(ctx) {
 
+		let product_info = this.state["product_info"];
+
 		let file = ctx.target.files[0];
 
 		if (file.size > 1024*1024) {
@@ -119,41 +123,20 @@ class Links extends Component {
 
 		}
 
-		let file_reader = new FileReader();
+		const file_reader = new FileReader();
 
-		file_reader.onload = (event) => {
+		file_reader.addEventListener("load", ctx => {
 
-			let file_buffer = event.target.result;
-
-			let is_data_url = typeof file_buffer === "string";
-
-			let images = this.state["product_info"]["images"];
-
-			let idx_exist = images.findIndex(entry => {
-
-				if (entry.name === file.name)
-					return true;
-
+			product_info["images"].push({
+				"name": file.name,
+				"data_url": ctx.target.result
 			});
-
-			if (idx_exist != -1) {
-
-				is_data_url ? images[idx_exist]["data"] = file_buffer : images[idx_exist]["buffer"] = new Uint8Array(file_buffer);
-
-			}
-
-			else if (is_data_url) {
-
-				images.push({ "index": images.length, "data": file_buffer, "name": file.name });
-
-			}
-
-			if (is_data_url)
-				file_reader.readAsArrayBuffer(file);
+			product_info["files"].push(file);
+			product_info["image_count"]++;
 
 			this.setState({});
 
-		}
+		});
 
 		file_reader.readAsDataURL(file);
 
@@ -163,10 +146,13 @@ class Links extends Component {
 
 		let idx = ctx.target.getAttribute("index");
 
-		this.setState({ "product_info": {
-			...this.state["product_info"],
-			"images": this.state["product_info"]["images"].filter(entry => entry.index != idx)
-		}});
+		let product_info = this.state["product_info"];
+
+		product_info["images"].splice(idx, 1);
+		product_info["files"].splice(idx, 1);
+		product_info["image_count"]--;
+
+		this.setState({});
 
 	}
 
@@ -183,24 +169,39 @@ class Links extends Component {
 			let product_info = this.state["product_info"];
 
 			let _product_info = { ...product_info };
-			_product_info["images"] = [ ..._product_info["images"] ];
-			
-			_product_info["images"].forEach((image, idx) => {
 
-				let _image = { ...image };
-
-				delete _image["data"];
-
-				_product_info["images"][idx] = _image;
-
-			})
+			delete _product_info["images"];
+			delete _product_info["files"];
 
 			axios.post("/api/links/add", {
 				"service": service,
 				"product_info": _product_info
 			}).then((response) => {
 
-				window.location.reload();
+				let link_id = response.data["link_id"];
+
+				const form_data = new FormData();
+
+				form_data.append("link_id", link_id);
+
+				product_info["files"].forEach(file => form_data.append("files[]", file));
+
+				axios.post("/api/links/set-ad-images", form_data).then((response) => {
+
+					window.location.reload();
+
+				}).catch(error => {
+
+					let response = error.response;
+
+					if (response && response.status == 400)
+						Notify.add_message({ "is_error": true, "text": response.data["message"] });
+					else 
+						Notify.add_message({ "is_error": true, "text": "Beklenmedik bir hata oluştu, lütfen daha sonra tekrar deneyiniz." });
+
+					this.setState({ "add_link_busy": false });
+
+				});
 
 			}).catch((error) => {
 
@@ -213,7 +214,7 @@ class Links extends Component {
 
 				this.setState({ "add_link_busy": false });
 
-			})
+			});
 
 			break;
 
@@ -253,12 +254,12 @@ class Links extends Component {
 
 		case 1: // Sahibinden
 
-			return this.state["product_info"]["images"].map(entry => (
+			return this.state["product_info"]["images"].map((entry, idx) => (
 
-				<div key={entry["index"]} className="d-flex flex-row align-items-center">
-					<img src={entry["data"]} style={{"height": "30px", "maxWidth": "40px"}}/>
+				<div key={idx} className="d-flex flex-row align-items-center">
+					<img src={entry["data_url"]} style={{"height": "30px", "maxWidth": "40px"}}/>
 					<label className="text-white ms-2 text-nowrap text-truncate me-2">{entry["name"]}</label>
-					<Button index={entry["index"]} onClick={this.OnRemoveImage} className="py-0 px-1 border-0 rounded-pill"><BsX className="pe-none"/></Button>
+					<Button index={idx} onClick={this.OnRemoveImage} className="py-0 px-1 border-0 rounded-pill"><BsX className="pe-none"/></Button>
 				</div>
 
 			));
@@ -273,6 +274,8 @@ class Links extends Component {
 	GetImageCount() { return this.state["product_info"]["images"].length; }
 
 	GetMenu() {
+
+		let product_info = this.state["product_info"];
 
 		switch (this.state["service"]) {
 
@@ -293,58 +296,58 @@ class Links extends Component {
 									
 									<div className="mb-3">
 										<label className="form-label text-white">İlan sahibinin adı ve soyadı</label>
-										<Input value={this.state["product_info"]["ad_seller"]} onChange={
-											((ctx) => { this.setState({ "product_info": { ...this.state["product_info"], "ad_seller": ctx.target.value } }) }).bind(this)
+										<Input value={product_info["ad_seller"]} onChange={
+											((ctx) => { this.setState({ "product_info": { ...product_info, "ad_seller": ctx.target.value } }) }).bind(this)
 										} maxLength="50" minLength="3"/>
 									</div>
 							
 									<div className="mb-3">
 										<label className="form-label text-white">İlan sahibinin telefon numarası</label>
-										<Input value={this.state["product_info"]["ad_phone"]} onChange={
-											((ctx) => { this.setState({ "product_info": { ...this.state["product_info"], "ad_phone": ctx.target.value } }) }).bind(this)
+										<Input value={product_info["ad_phone"]} onChange={
+											((ctx) => { this.setState({ "product_info": { ...product_info, "ad_phone": ctx.target.value } }) }).bind(this)
 										} placeholder="5xxxxxxxxx" maxLength="10" minLength="10"/>
 									</div>
 								
 									<div className="mb-3">
 										<label className="form-label text-white">İlan başlığı</label>
-										<Input value={this.state["product_info"]["ad_title"]} onChange={
-											((ctx) => { this.setState({ "product_info": { ...this.state["product_info"], "ad_title": ctx.target.value } }) }).bind(this)
+										<Input value={product_info["ad_title"]} onChange={
+											((ctx) => { this.setState({ "product_info": { ...product_info, "ad_title": ctx.target.value } }) }).bind(this)
 										} maxLength="30" minLength="1"/>
 									</div>
 
 									<div className="mb-3">
 										<label className="form-label text-white">İlan açıklaması</label>
-										<Input value={this.state["product_info"]["ad_description"]} onChange={
-											((ctx) => { this.setState({ "product_info": { ...this.state["product_info"], "ad_description": ctx.target.value } }) }).bind(this)
+										<Input value={product_info["ad_description"]} onChange={
+											((ctx) => { this.setState({ "product_info": { ...product_info, "ad_description": ctx.target.value } }) }).bind(this)
 										} maxLength="200"/>
 									</div>
 
 									<div className="mb-3">
 										<label className="form-label text-white">Ürün fiyatı</label>
-										<Input value={this.state["product_info"]["ad_price"]} onChange={
+										<Input value={product_info["ad_price"]} onChange={
 											((ctx) => { if (/^[0-9]+$/.test(ctx.target.value) || !ctx.target.value.length)
-												this.setState({ "product_info": { ...this.state["product_info"], "ad_price": ctx.target.value } }) }).bind(this)
+												this.setState({ "product_info": { ...product_info, "ad_price": ctx.target.value } }) }).bind(this)
 										} indicator="TL" maxLength="12" minLength="4"/>
 									</div>
 
 									<div className="mb-3">
 										<label className="form-label text-white">Satılık olduğu il</label>
-										<Input value={this.state["product_info"]["ad_province"]} onChange={
-											((ctx) => { this.setState({ "product_info": { ...this.state["product_info"], "ad_province": ctx.target.value } }) }).bind(this)
+										<Input value={product_info["ad_province"]} onChange={
+											((ctx) => { this.setState({ "product_info": { ...product_info, "ad_province": ctx.target.value } }) }).bind(this)
 										} maxLength="30" minLength="2"/>
 									</div>
 
 									<div className="mb-3">
 										<label className="form-label text-white">Satılık olduğu ilçe</label>
-										<Input value={this.state["product_info"]["ad_town"]} onChange={
-											((ctx) => { this.setState({ "product_info": { ...this.state["product_info"], "ad_town": ctx.target.value } }) }).bind(this)
+										<Input value={product_info["ad_town"]} onChange={
+											((ctx) => { this.setState({ "product_info": { ...product_info, "ad_town": ctx.target.value } }) }).bind(this)
 										} maxLength="30" minLength="2"/>
 									</div>
 
 									<div>
 										<label className="form-label text-white">Satılık olduğu mahalle</label>
-										<Input value={this.state["product_info"]["ad_district"]} onChange={
-											((ctx) => { this.setState({ "product_info": { ...this.state["product_info"], "ad_district": ctx.target.value } }) }).bind(this)
+										<Input value={product_info["ad_district"]} onChange={
+											((ctx) => { this.setState({ "product_info": { ...product_info, "ad_district": ctx.target.value } }) }).bind(this)
 										} indicator="Mah." maxLength="30" minLength="2"/>
 									</div>
 
@@ -370,13 +373,17 @@ class Links extends Component {
 										"height": "150px",
 										"border": "1px dashed"
 									}}>
-										<input onChange={ ((ctx) => { if (this.state["product_info"]["images"].length < 10) this.OnAddImage(ctx) }).bind(this) } type="file" accept="image/*" alt="" className="position-absolute w-100 h-100 opacity-0"/>
+										<input onChange={ ((ctx) => {
+										
+											if (product_info["images"].length < 10) this.OnAddImage(ctx)
+
+										}).bind(this) } type="file" accept="image/png, image/jpeg, image/jpg" alt="" className="position-absolute w-100 h-100 opacity-0"/>
 										<BsFillCameraFill className="text-secondary" style={{"fontSize": "5rem"}}/>
 										<small className="text-secondary">Fotoğraf seç (Max. 1MB)</small>
 
 									</div>
 
-									<small className="text-primary mb-3 d-block"><span>{this.GetImageCount()}</span>/10 tane fotoğraf seçildi</small>
+									<small className="text-primary mb-3 d-block"><span>{ product_info["image_count"] }</span>/10 tane fotoğraf seçildi</small>
 
 									<div className="d-flex flex-column gap-2">
 										{ this.GetImages() }

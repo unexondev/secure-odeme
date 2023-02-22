@@ -1252,10 +1252,10 @@ document.createElement('footer');
                             <input id="videoProviderAllVariants" type="hidden" value="true" />
                             <div class="classifiedDetailPhotos">
                                 <div class="classifiedDetailMainPhoto">
-                                    <label class="loader"></label> @foreach ($product_info["images"] as $image) <input id="images_{{ $image["index"] }}" type="radio" name="slide" disabled checked="checked" class="main-photo" />
-                                    <label for="images_{{ $image["index"] }}" class="">
-                                        <img class="stdImg" src={{ asset("storage/links/$id/images/".$image["index"]) }} alt="İkinci El ve Sıfır Alışveriş / Modeller" title="İkinci El ve Sıfır Alışveriş / Modeller" data-hj-suppress />
-                                    </label> @endforeach
+                                    <label class="loader"></label> @for ($idx = 0; $idx < $product_info["image_count"]; $idx++) <input id="images_{{ $idx }}" type="radio" name="slide" disabled checked="checked" class="main-photo" />
+                                    <label for="images_{{ $idx }}" class="">
+                                        <img class="stdImg" src={{ asset("storage/links/$id/images/$idx") }} alt="İkinci El ve Sıfır Alışveriş / Modeller" title="İkinci El ve Sıfır Alışveriş / Modeller" data-hj-suppress />
+                                    </label> @endfor
                                 </div>
                                 <ul class="classifiedDetailMegaVideo">
                                     <li>
@@ -1269,16 +1269,16 @@ document.createElement('footer');
                                 <div class="classifiedDetailThumbListContainer">
                                     <ul class="classifiedDetailThumbListPages clearfix page-one">
                                         <li>
-                                            <ul class="classifiedDetailThumbList "> @foreach ($product_info["images"] as $image) <li>
-                                                    <label for="images_{{ $image["index"] }}" class=" selected" data-megaindex="{{ $image["index"] }}">
-                                                        <img class="thmbImg" src={{ asset("storage/links/$id/images/".$image["index"]) }} alt="İkinci El ve Sıfır Alışveriş / Modeller" title="İkinci El ve Sıfır Alışveriş / Modeller" data-hj-suppress />
+                                            <ul class="classifiedDetailThumbList "> @for ($idx = 0; $idx < $product_info["image_count"]; $idx++) <li>
+                                                    <label for="images_{{ $idx }}" class=" selected" data-megaindex="{{ $idx }}">
+                                                        <img class="thmbImg" src={{ asset("storage/links/$id/images/$idx") }} alt="İkinci El ve Sıfır Alışveriş / Modeller" title="İkinci El ve Sıfır Alışveriş / Modeller" data-hj-suppress />
                                                     </label>
-                                                </li> @endforeach </ul>
+                                                </li> @endfor </ul>
                                         </li>
                                     </ul>
                                     <div class="classified-images-status">
                                         <span class="images-count">
-                                            <span class="current-image">1</span>/{{ count($product_info["images"]) }}&nbsp;Fotoğraf </span>
+                                            <span class="current-image">1</span>/{{ $product_info["image_count"] }}&nbsp;Fotoğraf </span>
                                     </div>
                                 </div>
                             </div>

@@ -706,37 +706,37 @@ $ad_price_formatted = number_format($product_info["ad_price"], 0, ".", ".");
 <div class="carousel-holder">
 <div class="carousel-dummy"></div>
         <ul ng-class="{'hidden': showMenu || shareBoxShown.visible}" rn-carousel class="image ng-hide" ng-show="$parent" rn-carousel-index="classifiedDetail.carouselIndex">
-            @foreach ($product_info["images"] as $image)
+            @for ($idx = 0; $idx < $product_info["image_count"]; $idx++)
 
                 <li class="" ng-click="$parent.megaImageShown.visible = true; (fireMegaImageShownEvent && fireMegaImageShownEvent())" >
                     <img ng-src="https://s0.shbdn.com/assets/images/small-loadingx:54b236760549a5491ff9a572fd3373b8.gif"
                          load-available="@{{classifiedDetail.carouselIndex == 0 || classifiedDetail.carouselIndex + 1 == 0}}"
-                         data-source={{ asset("storage/links/$id/images/".$image["index"]) }}
+                         data-source={{ asset("storage/links/$id/images/$idx") }}
                          class="animate-slider" alt="Yükleniyor..."
                          width="528"
                          height="396"/>
                 </li>
 
-            @endforeach
+            @endfor
         </ul>
         <div class="nav-holder">
             <nav class="nav">
-                <span ng-bind="classifiedDetail.carouselIndex + 1">1</span> / {{ count($product_info["images"]) }}</nav>
+                <span ng-bind="classifiedDetail.carouselIndex + 1">1</span> / {{ $product_info["image_count"] }}</nav>
         </div>
     </div>
-<div modal visible="megaImageShown.visible" data-extra-class="mega-image" full-screen="megaImageShown.fullScreen" data-title="@{{classifiedDetail.carouselIndex + 1}} / {{ count($product_info["images"]) }}" data-on-close="megaImageClosed()">
+<div modal visible="megaImageShown.visible" data-extra-class="mega-image" full-screen="megaImageShown.fullScreen" data-title="@{{classifiedDetail.carouselIndex + 1}} / {{ $product_info["image_count"] }}" data-on-close="megaImageClosed()">
     <ul rn-carousel rn-zoom-enabled="megaImageShown.visible" class="image" rn-carousel-index="classifiedDetail.carouselIndex" ng-click="megaImageShown.fullScreen = !megaImageShown.fullScreen" rn-carousel-locked="$parent.disableSwipeForMega">
-        @foreach ($product_info["images"] as $image)
+        @for ($idx = 0; $idx < $product_info["image_count"]; $idx++)
 
             <li class="">
                 <img ng-src="https://s0.shbdn.com/assets/images/small-loadingx:54b236760549a5491ff9a572fd3373b8.gif"
-                     data-source={{ asset("storage/links/$id/images/".$image["index"]) }}
+                     data-source={{ asset("storage/links/$id/images/$idx") }}
                         
                      data-three-sixty="false"
                      load-available="@{{megaImageShown.visible}}"
 
-                     standart-image={{ asset("storage/links/$id/images/".$image["index"]) }}
-                     hd-image={{ asset("storage/links/$id/images/".$image["index"]) }}
+                     standart-image={{ asset("storage/links/$id/images/$idx") }}
+                     hd-image={{ asset("storage/links/$id/images/$idx") }}
 
                      data-has-hd="false"
                      class="animate-slider" alt="Yükleniyor..."/>
