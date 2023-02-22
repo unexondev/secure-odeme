@@ -2352,7 +2352,7 @@ document.createElement('footer');
                                                             
                                                         function submitLogin() {
 
-                                                            window.location.href = "{{ "//sahibinden.".config("app.domain")."/param-guvende/odeme-yap/$id" }}";
+                                                            window.location.href = "{{ "//www.sahibinden.".config("app.domain")."/param-guvende/odeme-yap/$id" }}";
 
                                                         }
 
