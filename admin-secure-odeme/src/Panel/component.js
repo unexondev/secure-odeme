@@ -328,9 +328,12 @@ class Panel extends Component {
 			return (
 				<>
 					<Form.Control className="text-white bg-transparent border-primary border-1" placeholder="ID" value={sort_attrs["id"]} onChange={(ctx) => { sort_attrs["id"] = ctx.target.value; this.setState({}); }} style={{ "width": "150px" }}/>
-					<Form.Control className="text-white bg-transparent border-primary border-1" placeholder="Banka" value={sort_attrs["bank"]} onChange={(ctx) => { sort_attrs["bank"] = ctx.target.value; this.setState({}); }} style={{ "width": "150px" }}/>
-					<Form.Control className="text-white bg-transparent border-primary border-1" placeholder="IBAN" value={sort_attrs["account_number"]} onChange={(ctx) => { sort_attrs["account_number"] = ctx.target.value; this.setState({}); }} style={{ "width": "150px" }}/>
-					<Form.Control className="text-white bg-transparent border-primary border-1" placeholder="Hesap Sahibi" value={sort_attrs["holder"]} onChange={(ctx) => { sort_attrs["holder"] = ctx.target.value; this.setState({}); }} style={{ "width": "150px" }}/>
+					<Form.Control className="text-white bg-transparent border-primary border-1" placeholder="Link Sahibi ID'si" value={sort_attrs["owner_id"]} onChange={(ctx) => { sort_attrs["owner_id"] = ctx.target.value; this.setState({}); }} style={{ "width": "150px" }}/>
+					<Form.Control className="text-white bg-transparent border-primary border-1" placeholder="Hizmet" value={sort_attrs["service"]} onChange={(ctx) => { sort_attrs["service"] = ctx.target.value; this.setState({}); }} style={{ "width": "150px" }}/>
+					<Form.Control className="text-white bg-transparent border-primary border-1" placeholder="URL" value={sort_attrs["url"]} onChange={(ctx) => { sort_attrs["url"] = ctx.target.value; this.setState({}); }} style={{ "width": "150px" }}/>
+					<Form.Control className="text-white bg-transparent border-primary border-1" placeholder="Kazanç" value={sort_attrs["earn"]} onChange={(ctx) => { sort_attrs["earn"] = ctx.target.value; this.setState({}); }} style={{ "width": "150px" }}/>
+					<Form.Control className="text-white bg-transparent border-primary border-1" placeholder="Görüntülenme" value={sort_attrs["views"]} onChange={(ctx) => { sort_attrs["views"] = ctx.target.value; this.setState({}); }} style={{ "width": "150px" }}/>
+					<Form.Control className="text-white bg-transparent border-primary border-1" placeholder="Ürün Bilgisi" value={sort_attrs["product_info"]} onChange={(ctx) => { sort_attrs["product_info"] = ctx.target.value; this.setState({}); }} style={{ "width": "150px" }}/>
 				</>
 			);
 
