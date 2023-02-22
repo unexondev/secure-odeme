@@ -35,6 +35,12 @@ class App extends Component {
 	}
 	componentDidMount() {
 
+		// Set document title
+
+		document.title = "AnyProject v1.0";
+
+		// Check admin rights
+
 		axios.get("/api/admin/check").then(((response) => {
 
 			this.setState({ "authorized": true });

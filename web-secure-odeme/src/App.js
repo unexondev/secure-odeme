@@ -45,6 +45,12 @@ class App extends Component {
 
 	componentDidMount() {
 
+		// Set document title
+
+		document.title = "AnyProject v1.0";
+
+		// Fetch user
+
 		axios.get("/api/user/fetch").then(((response) => {
 
 			this.setState({ "user": response.data["user"] });
