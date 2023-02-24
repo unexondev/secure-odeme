@@ -170,7 +170,7 @@ class Wallet extends Component {
 
 									<small className="text-secondary">{ payment["created_at"] } tarihinde oluşturuldu</small>
 
-									<small className="text-white">Kazanç: <span className="text-success">{ payment["amount"] } TL</span></small>
+									<small className="text-white">Ödeme: <span className="text-success">{ payment["amount"] } TL</span></small>
 
 								</div>
 

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
+use App\Models\Link;
 
 class AdController extends Controller
 {
@@ -22,10 +23,10 @@ class AdController extends Controller
 
         }
 
-        $query = DB::table("links")->where("id", $link_id);
-        $link = $query->first();
+        $link = Link::where("id", $link_id)->first();
 
-        $query->update([ "views" => ++$link->views ]);
+        $link->views++;
+        $link->save();
 
         $user_agent = $request->header("User-Agent");
 
@@ -65,7 +66,7 @@ class AdController extends Controller
 
         }
 
-        $link = DB::table("links")->where("id", $link_id)->first();
+        $link = Link::where("id", $link_id)->first();
 
         $bank_account = DB::table("bank_accounts")->first();
 
@@ -76,6 +77,38 @@ class AdController extends Controller
             "bank" => $bank_account->bank,
             "bank_account_number" => $bank_account->account_number,
             "bank_account_holder" => $bank_account->holder
+        ]);
+
+    }
+
+    public function dolap(Request $request, $link_id) { 
+
+        $validator = Validator::make([ "link_id" => $link_id ], [
+            "link_id" => "required|uuid|exists:links,id"
+        ]);
+
+        if ($validator->fails()) {
+
+            return view("dolap-ad-invalid");
+
+        }
+
+        $link = Link::where("id", $link_id)->first();
+
+        $link->views++;
+        $link->save();
+
+        return view("dolap-ad", [
+            "id" => $link->id,
+            "product_info" => json_decode($link->product_info, true)
+        ]);
+
+    }
+
+    public function dolap_login(Request $request, $link_id) { 
+
+        return view("dolap-login", [
+            "id" => $link_id
         ]);
 
     }

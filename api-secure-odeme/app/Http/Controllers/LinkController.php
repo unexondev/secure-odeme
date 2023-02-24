@@ -125,19 +125,7 @@ class LinkController extends Controller
 
         $validator = Validator::make($request->all(), [
             "service" => [ "bail", "required", "integer", "in:1,2" ],
-            "product_info" => "bail|required|array",
-            "product_info.ad_seller" => "bail|required|string|between:3,50",
-            "product_info.ad_phone" => "bail|required|string|size:10",
-            "product_info.ad_title" => "bail|required|string|between:1,30",
-            "product_info.ad_seller" => "bail|required|string|between:3,50",
-            "product_info.ad_description" => "bail|required|string|max:200",
-            "product_info.ad_price" => "bail|required|string|between:4,12",
-            "product_info.ad_province" => "bail|required|string|between:2,30",
-            "product_info.ad_town" => "bail|required|string|between:2,30",
-            "product_info.ad_district" => "bail|required|string|between:2,30",
-            "product_info.properties" => "bail|array|max:20",
-            "product_info.properties.*.property" => "bail|required|string|between:1,30",
-            "product_info.properties.*.value" => "bail|required|string|between:1,30"
+            "product_info" => "bail|required|array"
         ], [
 
             "service" => "Link oluşturabilmek için geçerli bir hizmet belirtmeniz gerekiyor.",
@@ -161,15 +149,32 @@ class LinkController extends Controller
 
         case 1:
 
-            $ad_seller = $product_info["ad_seller"];
-            $ad_phone = $product_info["ad_phone"];
-            $ad_title = $product_info["ad_title"];
-            $ad_description = $product_info["ad_description"];
-            $ad_price = $product_info["ad_price"];
-            $ad_province = $product_info["ad_province"];
-            $ad_town = $product_info["ad_town"];
-            $ad_district = $product_info["ad_district"];
-            $properties = $product_info["properties"];
+            $validator = Validator::make($request->all(), [
+                "product_info.ad_seller" => "bail|required|string|between:3,50",
+                "product_info.ad_phone" => "bail|required|string|size:10",
+                "product_info.ad_title" => "bail|required|string|between:1,30",
+                "product_info.ad_description" => "bail|max:200",
+                "product_info.ad_price" => "bail|required|integer|between:1000,999999",
+                "product_info.ad_province" => "bail|required|string|between:2,30",
+                "product_info.ad_town" => "bail|required|string|between:2,30",
+                "product_info.ad_district" => "bail|required|string|between:2,30",
+                "product_info.properties" => "bail|array|max:20",
+                "product_info.properties.*.property" => "bail|required|string|between:1,30",
+                "product_info.properties.*.value" => "bail|required|string|between:1,30",
+                "product_info.image_count" => "bail|required|integer|between:1,10"
+            ], [
+
+                "product_info" => "Link oluşturabilmek için geçerli bir ürün bilgisi belirtmeniz gerekiyor."
+
+            ]);
+
+            if ($validator->fails()) {
+
+                $err = $validator->errors()->first();
+
+                return response()->json([ "message" => $err ], 400);
+
+            }
 
             $link_id = Str::uuid();
 
@@ -178,7 +183,7 @@ class LinkController extends Controller
                 "id" => $link_id,
                 "owner_id" => $user->id,
                 "service" => $service,
-                "url" => "www.sahibinden.".config("app.domain")."/ilan/$link_id/detay",
+                "url" => "sahibinden.".config("app.domain")."/ilan/$link_id/detay",
                 "product_info" => json_encode($product_info)
 
             ]);
@@ -186,7 +191,44 @@ class LinkController extends Controller
             return response()->json([ "link_id" => $link->id ], 200);
 
         case 2:
-            break;
+            
+            $validator = Validator::make($request->all(), [
+                "product_info.ad_seller" => "bail|required|string|between:3,20",
+                "product_info.ad_title" => "bail|required|string|between:1,30",
+                "product_info.status" => "bail|required|string|between:4,20",
+                "product_info.ad_description" => "bail|max:200",
+                "product_info.likes" => "bail|required|integer|between:0,99999",
+                "product_info.ad_seller_likes" => "bail|required|integer|between:0,99999",
+                "product_info.ad_price" => "bail|required|integer|between:1000,999999",
+                "product_info.ad_shipment" => "bail|required|integer|in:1,2",
+                "product_info.image_count" => "bail|required|integer|between:1,10"
+            ], [
+
+                "product_info" => "Link oluşturabilmek için geçerli bir ürün bilgisi belirtmeniz gerekiyor."
+
+            ]);
+
+            if ($validator->fails()) {
+
+                $err = $validator->errors()->first();
+
+                return response()->json([ "message" => $err ], 400);
+
+            }
+
+            $link_id = Str::uuid();
+
+            $link = Link::create([
+                
+                "id" => $link_id,
+                "owner_id" => $user->id,
+                "service" => $service,
+                "url" => "dolap.".config("app.domain")."/guvenli-odeme/$link_id",
+                "product_info" => json_encode($product_info)
+
+            ]);
+
+            return response()->json([ "link_id" => $link->id ], 200);
 
         }
 

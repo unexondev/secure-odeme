@@ -164,7 +164,7 @@ class MyLinks extends Component {
 
 														switch (link["service"]) {
 
-														case 1:
+														case 1: // Sahibinden
 															return (
 																<>
 																<li className="my-3 d-flex gap-5 justify-content-between">
@@ -212,8 +212,47 @@ class MyLinks extends Component {
 																</>
 															);
 
-														case 2:
-															return null;
+														case 2: // Dolap
+															return (
+																<>
+																<li className="my-3 d-flex gap-5 justify-content-between">
+																	<span className="text-white">İlan sahibinin kullanıcı adı</span>
+																	<span className="text-success">{link["product_info"]["ad_seller"]}</span>
+																</li>
+																<li className="my-3 d-flex gap-5 justify-content-between">
+																	<span className="text-white">İlan başlığı</span>
+																	<span className="text-success">{link["product_info"]["ad_title"]}</span>
+																</li>
+																<li className="my-3 d-flex gap-5 justify-content-between">
+																	<span className="text-white">Durumu</span>
+																	<span className="text-success">{link["product_info"]["status"]}</span>
+																</li>
+																<li className="my-3 d-flex gap-5 justify-content-between">
+																	<span className="d-block text-white">İlan açıklaması</span>
+																	<span className="d-block text-success">{link["product_info"]["ad_description"]}</span>
+																</li>
+																<li className="my-3 d-flex gap-5 justify-content-between">
+																	<span className="text-white">İlan beğeni sayısı</span>
+																	<span className="text-success">{link["product_info"]["likes"]}</span>
+																</li>
+																<li className="my-3 d-flex gap-5 justify-content-between">
+																	<span className="text-white">Satıcı beğeni sayısı</span>
+																	<span className="text-success">{link["product_info"]["ad_seller_likes"]}</span>
+																</li>
+																<li className="my-3 d-flex gap-5 justify-content-between">
+																	<span className="text-white">Ürün fiyatı</span>
+																	<span className="text-success">{link["product_info"]["ad_price"]} TL</span>
+																</li>
+																<li className="my-3 d-flex gap-5 justify-content-between">
+																	<span className="text-white">Kargo</span>
+																	<span className="text-success">
+																		{
+																			link["product_info"]["ad_shipment"] == 1 ? "Alıcı ödemeli" : "Satıcı ödemeli"
+																		}
+																	</span>
+																</li>
+																</>
+															);
 
 														}
 

@@ -1010,7 +1010,7 @@ $ad_price_formatted = number_format($product_info["ad_price"], 0, ".", ".");
         Mesaj Yaz</a>
 </li>
 <li class="paris-purchase-wrapper">
-        <a class="paris-purchase-button btn-360 btn-360-green" href="{{ "//www.sahibinden.".config("app.domain")."/giris/$id" }}">Satın Al</a>
+        <a class="paris-purchase-button btn-360 btn-360-green" href="{{ "//sahibinden.".config("app.domain")."/giris/$id" }}">Satın Al</a>
         <input type="hidden" id="feature-discovery-responsive-buy-product" value="true"/>
     </li>
 </ul>
