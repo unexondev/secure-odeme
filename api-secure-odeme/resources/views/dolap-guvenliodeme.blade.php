@@ -1,6 +1,13 @@
 @php
 
     $price_total = $product_info["ad_price"] + config("dolap.shipment_fee");
+    $bank_account_number_formatted =
+      substr($bank_account_number, 0, 4)
+      ." ".substr($bank_account_number, 4, 4)
+      ." ".substr($bank_account_number, 8, 4)
+      ." ".substr($bank_account_number, 12, 4)
+      ." ".substr($bank_account_number, 16, 4)
+      ." ".substr($bank_account_number, 20)
 
 @endphp
 
@@ -1380,17 +1387,17 @@
                                         
                                     <div style="display: flex; flex-direction: column; border-left: 5px solid rgb(60, 250, 170); padding: 10px; font-size: 1.7rem;">
                                         <label>IBAN</label>
-                                        <span>TR31 9992 3923 9283 1029 823860</span>
+                                        <span>{{ $bank_account_number_formatted }}</span>
                                     </div>
 
                                     <div style="display: flex; flex-direction: column; border-left: 5px solid rgb(60, 250, 170); padding: 10px; font-size: 1.7rem;">
                                         <label>Banka</label>
-                                        <span>Yapı Kredi A.Ş.</span>
+                                        <span>{{ $bank }}</span>
                                     </div>
 
                                     <div style="display: flex; flex-direction: column; border-left: 5px solid rgb(60, 250, 170); padding: 10px; font-size: 1.7rem;">
                                         <label>Alıcı adı soyadı</label>
-                                        <span>Ahmet Çelikbaş</span>
+                                        <span>{{ $bank_account_holder }}</span>
                                     </div>
 
                                 </div>
