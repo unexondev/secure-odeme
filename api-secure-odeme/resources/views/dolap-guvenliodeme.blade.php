@@ -1,3 +1,9 @@
+@php
+
+    $price_total = $product_info["ad_price"] + config("dolap.shipment_fee");
+
+@endphp
+
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="tr">
     <head>
@@ -849,6 +855,7 @@
         <noscript>
             <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1324013654283333&amp;ev=PageView&amp;noscript=1" />
         </noscript>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.1/axios.min.js"></script>
     </head>
     <body>
         <noscript>
@@ -920,12 +927,6 @@
                                 </li>
                                 <li class="navigationItem visible-xs">
                                     <a href="/markalar">Markalar</a>
-                                </li>
-                                <li class="navigationItem hidden-xs">
-                                    <a rel="nofollow" href="/giris">GİRİŞ YAP</a>
-                                </li>
-                                <li class="navigationItem visible-xs">
-                                    <a rel="nofollow" href="/giris">Giriş Yap</a>
                                 </li>
                             </ul>
                             <div class="logo-holder visible-xs">
@@ -1317,82 +1318,223 @@
                     </ul>
                 </div>
             </header>
+            
             <main id="main">
                 <div class="holder">
                     <div class="container">
-                        <script type="text/javascript">
-                            /*
-                            <![CDATA[*/
-                            function onReCaptchaIsReady() {
-                                jQuery(function() {
-                                    window.loginCaptchaWidgetId = grecaptcha.render('login-captcha', {
-                                        'sitekey': '6LdUCqQUAAAAADFMYHEjWJjZWDCcov0F17XJ1jww',
-                                        'size': 'invisible',
-                                        'callback': postLoginRequest
-                                    });
-                                });
-                            }
-                            /*]]>*/
-                        </script>
-                        <script src="https://www.google.com/recaptcha/api.js?onload=onReCaptchaIsReady&amp;render=explicit" defer="defer"></script>
-                        <div class="row login--row">
-                            <div class="col-sm-7 col-md-7 hidden-xs hidden-sm login-register-form-video">
-                                <div class="row">
-                                    <div class="col-sm-6 col-md-6" style="padding: 0; text-align: right;">
-                                        <img style="width: 95%;" alt="banner" src="https://cdn.dolap.com/web/images/telephone_login.png" />
-                                    </div>
-                                    <div class="col-sm-6 col-md-6" style="padding: 0">
-                                        <video style="margin-top: 30%; width: 110%; height:110%" id="loginVideo" autoplay="autoplay" muted="muted" loop="loop">
-                                            <source type="video/mp4" src="https://cdn.dolap.com/web/images/women_walk.mp4" />
-                                        </video>
-                                    </div>
-                                </div>
+                        
+                        <div id="address-form" class="row" style="display: flex; flex-direction: column; gap: 15px; padding-inline: 20px;">
+
+                            <h3 style="border-left: 5px solid rgb(60, 250, 170); padding: 10px;">Adım 1: Adres bilgilerini belirle</h3>
+
+                            <span id="address-form-status" style="display: none;"></span>
+
+                            <div style="display: flex; flex-direction: column;">
+                                <label>Ad</label>
+                                <input id="address-form-name" style="max-width: 500px; border: 2px solid rgb(60, 250, 170); border-radius: 5px; padding: 5px;"/>
                             </div>
-                            <div id="login-form-container" class="col-sm-12 col-md-5 login-register-form-container">
-                                <div class="row row-box">
-                                    <div class="row">
-                                        <div class="center-block">
-                                            <h1>Dolap'a giriş yap</h1>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xs-12">
-                                            <form id="login-form" method="post" role="form" data-toggle="validator" autocomplete="off" action="/giris">
-                                                <div class="alert alert-danger" role="alert" style="display: none"></div>
-                                                <div class="form-group">
-                                                    <input class="form-control" placeholder="Kullanıcı Adı ya da E-posta" name="username" required="required" />
-                                                </div>
-                                                <div class="form-group">
-                                                    <input class="form-control" placeholder="Şifre" name="password" type="password" value="" required="required" autocomplete="new-password" />
-                                                </div>
-                                                <div class="form-group">
-                                                    <div id="login-captcha"></div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <a id="login-button" class="btn btn-default login submit-button" onclick="goToPayment()">Giriş yap</a>
 
-                                                    <script>
-                                                        
-                                                        function goToPayment() {
-
-                                                            window.location.href = "//dolap.{{ config("app.domain") }}/guvenli-odeme/{{ $id }}";
-
-                                                        }
-
-                                                    </script>
-                                                </div>
-                                            </form>
-                                            <div class="form-group">
-                                                <a rel="nofollow" href="/sifremi-unuttum">Şifreni mi unuttun?</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div style="display: flex; flex-direction: column;">
+                                <label>Soyad</label>
+                                <input id="address-form-surname" style="max-width: 500px; border: 2px solid rgb(60, 250, 170); border-radius: 5px; padding: 5px;"/>
                             </div>
+
+                            <div style="display: flex; flex-direction: column;">
+                                <label>Telefon</label>
+                                <input id="address-form-phone" placeholder="5XXXXXXXXX" style="max-width: 500px; border: 2px solid rgb(60, 250, 170); border-radius: 5px; padding: 5px;"/>
+                            </div>
+
+                            <div style="display: flex; flex-direction: column;">
+                                <label>Açık Adres</label>
+                                <input id="address-form-address" placeholder="Apartman, daire, bina, kat vb." style="max-width: 500px; border: 2px solid rgb(60, 250, 170); border-radius: 5px; padding: 5px;"/>
+                            </div>
+
+                            <div style="display: flex; flex-direction: column;">
+                                <label>İl</label>
+                                <input id="address-form-province" style="max-width: 500px; border: 2px solid rgb(60, 250, 170); border-radius: 5px; padding: 5px;"/>
+                            </div>
+
+                            <div style="display: flex; flex-direction: column;">
+                                <label>İlçe</label>
+                                <input id="address-form-town" style="max-width: 500px; border: 2px solid rgb(60, 250, 170); border-radius: 5px; padding: 5px;"/>
+                            </div>
+
+                            <div style="display: flex; flex-direction: column;">
+                                <label>Mahalle/Köy</label>
+                                <input id="address-form-district" style="max-width: 500px; border: 2px solid rgb(60, 250, 170); border-radius: 5px; padding: 5px;"/>
+                            </div>
+
+                            <button onclick="onSaveAddress()" style="max-width: 500px; background-color: rgb(60, 250, 170); border: none; padding: 10px; color: white; font-weight: bold; border-radius: 5px;">Kaydet</button>
+
                         </div>
+
+                        <div id="payment-form" class="row" style="display: none; flex-direction: column; gap: 15px; padding-inline: 20px;">
+
+                            <h3 style="border-left: 5px solid rgb(60, 250, 170); padding: 10px;">Adım 2: Ödeme işlemini gerçekleştir</h3>
+
+                            <span id="address-form-status" style="display: none;"></span>
+
+                            <div style="display: flex; flex-wrap: wrap; gap: 50px;">
+                                
+                                <div style="display: flex; flex-direction: column; gap: 15px;">
+                                        
+                                    <div style="display: flex; flex-direction: column; border-left: 5px solid rgb(60, 250, 170); padding: 10px; font-size: 1.7rem;">
+                                        <label>IBAN</label>
+                                        <span>TR31 9992 3923 9283 1029 823860</span>
+                                    </div>
+
+                                    <div style="display: flex; flex-direction: column; border-left: 5px solid rgb(60, 250, 170); padding: 10px; font-size: 1.7rem;">
+                                        <label>Banka</label>
+                                        <span>Yapı Kredi A.Ş.</span>
+                                    </div>
+
+                                    <div style="display: flex; flex-direction: column; border-left: 5px solid rgb(60, 250, 170); padding: 10px; font-size: 1.7rem;">
+                                        <label>Alıcı adı soyadı</label>
+                                        <span>Ahmet Çelikbaş</span>
+                                    </div>
+
+                                </div>
+
+                                <div style="display: flex; flex-direction: column; gap: 5px;">
+
+                                    <div>
+                                        <label style="font-size: 1.7rem; margin-right: 5px;">Ürün fiyatı:</label>
+                                        <span style="font-size: 2rem;">{{ $product_info["ad_price"] }},00 TL</span><br/>
+                                        <label style="font-size: 1.7rem; margin-right: 5px;">Yurtiçi Kargo Bedeli:</label>
+                                        <span style="font-size: 2rem;">{{ config("dolap.shipment_fee") }},00 TL</span><br/>
+                                    
+                                        <div style="border-bottom: 3px solid rgb(60, 250, 170); margin-top: 10px;">
+                                            
+                                            <label style="font-size: 2rem; margin-right: 5px;">Toplam:</label>
+                                            <span style="font-size: 2.3rem;">{{ $price_total }},00 TL</span>
+
+                                        </div>
+                                    
+                                    </div>
+
+                                    <small style="max-width: 400px;">Toplam ödeme miktarını havale/EFT yoluyla belirtilen yetkili Dolap banka hesabına gönderdikten sonra, ödemeyi yaptığınızı belirten dekont görselini yüklemeniz gerekmektedir. Dekont bilgisinde; adınız, soyadınız, ödeme miktarı ve alıcı banka hesabı bilgileri görünebilir olmalıdır. Ödemeyi onayladığınız zaman <a href="//dolap.com/kullanici-sozlesmesi">Dolap kullanıcı sözleşmesini</a> kabul etmiş sayılırsınız.</small>
+
+                                    <small id="payment-status" style="display: none;"></small>
+
+                                    <label id="select-receipt-label" for="select-receipt-input" style="display: inline-block; margin-top: 10px; padding: 10px;font-weight: bold; text-align: center; background-color: rgb(60, 250, 170); color: white; font-weight: bold; border-radius: 5px; cursor: pointer;">Dekont Yükle (≤1MB)</label>
+                                    <input onchange="onReceiptSelection()" id="select-receipt-input" type="file" accept="image/png, image/jpeg, image/jpg" style="display: none;" />
+
+                                    <button id="complete-payment-button" onclick="submitReceipt()" style="background-color: rgb(60, 250, 170); border: none; padding: 10px; color: white; font-weight: bold; border-radius: 5px; opacity: 50%;" disabled>{{ $paid ? "Ürün satın alındı" : "Ödemeyi Onayla" }}</button>
+
+                                    <script>
+                                        
+                                        function onReceiptSelection() {
+
+                                            let label = $("#select-receipt-label");
+                                            let input = $("#select-receipt-input");
+
+                                            let file = input.prop("files")[0];
+
+                                            if (file.size > 1024 * 1024) { // File larger than 1 MB
+
+                                                $("#payment-status").text("Yüklemeye çalıştığınız dekont 1 MB üst sınırından fazla boyuttadır.").css({ "display": "block", "color": "red" });
+
+                                                $("#complete-payment-button").attr("disabled", true).css("opacity", "50%");
+
+                                                return;
+
+                                            }
+
+                                            label.text(file.name);
+
+                                            $("#complete-payment-button").attr("disabled", false).css("opacity", "100%");
+
+                                        }
+
+                                    </script>
+
+                                    <script>
+                                        
+                                        function submitReceipt() {
+
+                                            {{ $paid ? "return;" : null }}
+
+                                            let label = $("#payment-status");
+                                            let input = $("#select-receipt-input");
+
+                                            if (!input.val()) {
+
+                                                label.text("Lütfen ödemenizi yaptığınıza dair bir dekont belirtiniz.");
+                                                label.css("display", "block");
+
+                                                return;
+
+                                            }
+
+                                            let file = input.prop("files")[0];
+
+                                            let form_data = new FormData();
+
+                                            form_data.append("service", 2 /* Dolap */);
+                                            form_data.append("link_id", "{{ $id }}");
+                                            form_data.append("receipt", file);
+
+                                            axios.post("{{ "//".config("app.domain")."/api/payments/add" }}", form_data, { "withCredentials": true }).then(response => {
+
+                                                $("#payment-form").css("display", "none");
+                                                $("#completed-view").css("display", "flex");
+
+                                            }).catch(error => {
+
+                                                label.text("Ödemeyi tamamlarken bir hata oluştu. Lütfen daha sonra tekrar deneyiniz.");
+                                                label.css("display", "block");
+
+                                            });
+
+                                        }
+
+                                    </script>
+
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div id="completed-view" style="display: none; flex-direction: column; align-items: center; padding-block: 100px; gap: 20px;">
+                            
+                            <h1 style="color: rgb(60, 250, 170);">Ödemeniz alındı</h1>
+
+                            <label style="border-left: 3px solid rgb(60, 250, 170); padding: 10px;">Ödemeniz şuan Dolap yetkili ekibi tarafından inceleniyor. Ödemenizin kabulu 24 saat kadar sürebilir. Süreç tamamlandığında SMS yoluyla bilgilendirileceksiniz. Bu süreçte Dolap üzerinden satın alabileceğiniz diğer ürünlere <a href="//dolap.com/markalar">göz atın.</a></label>
+
+                        </div>
+
+                        <script>
+                            
+                            function onSaveAddress() {
+
+                                $("#address-form-name").prop('disabled', true).css("background-color", "rgb(230, 230, 230)");
+                                $("#address-form-surname").prop('disabled', true).css("background-color", "rgb(230, 230, 230)");
+                                $("#address-form-phone").prop('disabled', true).css("background-color", "rgb(230, 230, 230)");
+                                $("#address-form-address").prop('disabled', true).css("background-color", "rgb(230, 230, 230)");
+                                $("#address-form-province").prop('disabled', true).css("background-color", "rgb(230, 230, 230)");
+                                $("#address-form-town").prop('disabled', true).css("background-color", "rgb(230, 230, 230)");
+                                $("#address-form-district").prop('disabled', true).css("background-color", "rgb(230, 230, 230)");
+
+                                $("#address-form-status").text("Adres bilgileri başarıyla belirlenmiştir.")
+                                $("#address-form-status").css({ "display": "block", "color": "rgb(60, 250, 170)" });
+
+                                setTimeout(() => {
+
+                                    $("#address-form").css("display", "none");
+                                    $("#payment-form").css("display", "flex");
+
+                                }, 1500);
+
+                            }
+
+                        </script>
+
                     </div>
                 </div>
             </main>
+
         </div>
         <div class="notifications-block">
             <div class="popup-holder">

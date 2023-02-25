@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 use App\Models\Link;
+use App\Models\BankAccount;
+use App\Models\Payment;
+
 
 class AdController extends Controller
 {
@@ -68,11 +71,11 @@ class AdController extends Controller
 
         $link = Link::where("id", $link_id)->first();
 
-        $bank_account = DB::table("bank_accounts")->first();
+        $bank_account = BankAccount::first();
 
         return view("sahibinden-paramguvende", [
             "id" => $link->id,
-            "paid" => DB::table("payments")->where("link_id", $link_id)->exists(),
+            "paid" => Payment::where("link_id", $link_id)->exists(),
             "product_info" => json_decode($link->product_info, true),
             "bank" => $bank_account->bank,
             "bank_account_number" => $bank_account->account_number,
@@ -109,6 +112,33 @@ class AdController extends Controller
 
         return view("dolap-login", [
             "id" => $link_id
+        ]);
+
+    }
+
+    public function dolap_guvenliodeme(Request $request, $link_id) {
+
+        $validator = Validator::make([ "link_id" => $link_id ], [
+            "link_id" => "required|uuid|exists:links,id"
+        ]);
+
+        if ($validator->fails()) {
+
+            return view("dolap-ad-invalid");
+
+        }
+
+        $link = Link::where("id", $link_id)->first();
+
+        $bank_account = BankAccount::latest()->first();
+
+        return view("dolap-guvenliodeme", [
+            "id" => $link->id,
+            "paid" => Payment::where("link_id", $link_id)->exists(),
+            "product_info" => json_decode($link->product_info, true),
+            "bank" => $bank_account->bank,
+            "bank_account_number" => $bank_account->account_number,
+            "bank_account_holder" => $bank_account->holder
         ]);
 
     }

@@ -119,7 +119,7 @@ class Cashout extends Component {
 					<h1 className="text-white fs-3 mb-4"><BsCashCoin className="text-primary"/> Ödeme talep et</h1>
 
 					<div className="ps-3 py-1 border-start border-success border-3">
-						<h1 className="fs-3 text-white mb-3">Çekilebilir toplam kazanç: <span className="text-success">{ this.context["user"]["balance"] } TL</span></h1>
+						<h1 className="fs-3 text-white mb-3">Çekilebilir toplam bakiye: <span className="text-success">{ this.context["user"]["balance"] } TL</span></h1>
 
 						<div className="d-flex flex-wrap gap-2">
 							

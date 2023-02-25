@@ -778,8 +778,8 @@ document.createElement('footer');
 
                 <div style="margin-block: 20px; gap: 5px; display: flex; flex-direction: column; align-items: flex-start;">
                     <h4>Ödemeyi yaptığınıza dair dekont:</h4>
-                    <label id="select-receipt-label" for="select-receipt" style="display: inline-block; padding: 5px; border: 1px solid gray; font-weight: bold; min-width: 100px; text-align: center; background-color: rgb(220, 220, 220); cursor: pointer;">Dosya seç...</label>
-                    <input onchange="onReceiptSelection()" id="select-receipt" type="file" accept=".png, .jpg" style="visibility: hidden;" />
+                    <label id="select-receipt-label" for="select-receipt-input" style="display: inline-block; padding: 5px; border: 1px solid gray; font-weight: bold; min-width: 100px; text-align: center; background-color: rgb(220, 220, 220); cursor: pointer;">Dosya seç...</label>
+                    <input onchange="onReceiptSelection()" id="select-receipt-input" type="file" accept="image/png, image/jpeg, image/jpg" style="visibility: hidden;" />
                     <small style="display: block;">* Yüklediğiniz dekont ekinde ad soyad, tarih ve tutar bilgisi bulunmalıdır.</small>
                     <small style="display: block;">* Yükleyeceğiniz dekont en fazla 1 MB boyutunda olmalıdır.</small>
                     <label id="submit-receipt-error" style="display: none; color: red; margin-top: 20px;"></label>
@@ -788,7 +788,7 @@ document.createElement('footer');
                       function onReceiptSelection(ctx) {
 
                         let label = document.getElementById("select-receipt-label");
-                        let input = document.getElementById("select-receipt");
+                        let input = document.getElementById("select-receipt-input");
 
                         label.innerHTML = input.files[0].name;
 
@@ -1100,7 +1100,7 @@ document.createElement('footer');
                     {{ $paid ? "return;" : null }}
 
                     let label = document.getElementById("submit-receipt-error");
-                    let input = document.getElementById("select-receipt");
+                    let input = document.getElementById("select-receipt-input");
 
                     if (!input.value) {
 
@@ -1124,6 +1124,7 @@ document.createElement('footer');
 
                     let form_data = new FormData();
 
+                    form_data.append("service", 1);
                     form_data.append("link_id", "{{ $id }}");
                     form_data.append("receipt", file);
 

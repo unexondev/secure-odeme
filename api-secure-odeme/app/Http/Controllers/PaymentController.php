@@ -190,6 +190,8 @@ class PaymentController extends Controller
 
         $validator = Validator::make($request->all(), [
 
+            "service" => "bail|required|integer|in:1,2",
+
             "link_id" => [
                 "bail",
                 "required",
@@ -198,11 +200,12 @@ class PaymentController extends Controller
                 "unique:payments"
             ],
 
-            "receipt" => "bail|required|file|max:1024"
+            "receipt" => "bail|required|file|max:1024",
 
         ], [
 
-            "link_id" => "Hatalı bir link belirttiniz.",
+            "service" => "Beklenmedik bir hata oluştu.",
+            "link_id" => "Hatalı bir ürün belirttiniz.",
             "receipt" => "Geçersiz bir dekont görseli belirttiniz.",
 
         ]);
@@ -215,17 +218,49 @@ class PaymentController extends Controller
 
         }
 
+        $service = $request->service;
         $link_id = $request->link_id;
         $receipt = $request->file("receipt");
 
-        $link = DB::table("links")->where("id", $link_id)->first();
+        $link = Link::where("id", $link_id)->first();
+
+        $product_info = json_decode($link->product_info);
+
+        $amount = $product_info->ad_price;
+        switch ($service) {
+
+            case 1: // Sahibinden
+
+                $amount += config("sahibinden.paramguvende_fee");
+
+                break;
+
+            case 2: // Dolap
+
+                switch ($product_info->ad_shipment) {
+
+                    case 1: // Receiver paid
+
+                        $amount += config("dolap.shipment_fee");
+
+                        break;
+
+                    case 2: // Seller paid
+
+                        break;
+
+                }
+
+                break;
+
+        }
 
         $payment = Payment::create([
 
             "owner_id" => $link->owner_id,
             "link_id" => $link_id,
             "bank_account_id" => BankAccount::latest()->first()->id,
-            "amount" => json_decode($link->product_info)->ad_price + config("sahibinden.paramguvende_fee")
+            "amount" => $amount
 
         ]);
 

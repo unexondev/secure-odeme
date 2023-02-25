@@ -223,7 +223,7 @@ class LinkController extends Controller
                 "id" => $link_id,
                 "owner_id" => $user->id,
                 "service" => $service,
-                "url" => "dolap.".config("app.domain")."/guvenli-odeme/$link_id",
+                "url" => "dolap.".config("app.domain")."/urun/$link_id",
                 "product_info" => json_encode($product_info)
 
             ]);

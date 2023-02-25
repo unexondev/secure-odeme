@@ -8,7 +8,7 @@ import { BsLink45Deg, BsGearFill, BsCashCoin, BsEyeFill } from "react-icons/bs";
 
 // import icons
 import sahibinden_icon from "../../Assets/Images/sahibinden_icon_mini.jpg";
-import dolap_icon from "../../Assets/Images/sahibinden_icon_mini.jpg";
+import dolap_icon from "../../Assets/Images/dolap_icon_mini.png";
 
 import axios from "../../Assets/Components/AxiosInstance/component.js";
 import { Notify } from "../../Assets/Components/Notifier/component.js";
