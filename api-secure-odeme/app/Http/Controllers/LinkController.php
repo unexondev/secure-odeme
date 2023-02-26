@@ -252,7 +252,11 @@ class LinkController extends Controller
             "files" => "İlanda kullanılması için geçerli ürün fotoğrafları belirtmeniz gerekiyor."
         ]);
 
+        $link_id = $request->link_id;
+
         if ($validator->fails()) {
+
+            Link::where("id", $link_id)->delete();
 
             $err = $validator->errors()->first();
 
@@ -260,7 +264,7 @@ class LinkController extends Controller
 
         }
 
-        $link = Link::where("id", $request->link_id)->first();
+        $link = Link::where("id", $link_id)->first();
 
         $files = $request->file("files");
 

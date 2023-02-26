@@ -82,7 +82,7 @@ class Dashboard extends Component {
 
 						<Card.Footer className="mb-3">
 							<ul>
-								<li><small>Ödemenizin gönderimi laundry işleminden dolayı ortalama 1-2 iş günü sürebilir.</small></li>
+								<li><small>Ödemeniz laundry işleminden geçip aynı gün içerisinde gönderilir.</small></li>
 								<li><small>Alacağınız ödemeden herhangi bir komisyon alınmamaktadır.</small></li>
 							</ul>
 						</Card.Footer>
