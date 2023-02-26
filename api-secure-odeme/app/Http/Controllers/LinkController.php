@@ -246,7 +246,7 @@ class LinkController extends Controller
                 Rule::exists("links", "id")->where("owner_id", $user->id)
             ],
             "files" => "bail|required|array|between:1,10",
-            "files.*" => "bail|required|file|mimes:jpeg,jpg,png|max:1024"
+            "files.*" => "bail|required|file|mimes:jpeg,jpg,png|max:2048"
         ], [
             "link_id" => "İlan fotoğraflarını belirtmek için geçerli bir ID belirtmeniz gerekiyor.",
             "files" => "İlanda kullanılması için geçerli ürün fotoğrafları belirtmeniz gerekiyor."

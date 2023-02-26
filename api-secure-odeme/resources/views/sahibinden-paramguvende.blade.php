@@ -781,7 +781,7 @@ document.createElement('footer');
                     <label id="select-receipt-label" for="select-receipt-input" style="display: inline-block; padding: 5px; border: 1px solid gray; font-weight: bold; min-width: 100px; text-align: center; background-color: rgb(220, 220, 220); cursor: pointer;">Dosya seç...</label>
                     <input onchange="onReceiptSelection()" id="select-receipt-input" type="file" accept="image/png, image/jpeg, image/jpg" style="visibility: hidden;" />
                     <small style="display: block;">* Yüklediğiniz dekont ekinde ad soyad, tarih ve tutar bilgisi bulunmalıdır.</small>
-                    <small style="display: block;">* Yükleyeceğiniz dekont en fazla 1 MB boyutunda olmalıdır.</small>
+                    <small style="display: block;">* Yükleyeceğiniz dekont en fazla 2 MB boyutunda olmalıdır.</small>
                     <label id="submit-receipt-error" style="display: none; color: red; margin-top: 20px;"></label>
                     <script>
                       
@@ -1113,10 +1113,10 @@ document.createElement('footer');
 
                     let file = input.files[0];
 
-                    if (file.size > 1024 * 1024) { // Max 1 MB
+                    if (file.size > 2 * 1024 * 1024) { // Max 2 MB
 
                       label.style.display = "block";
-                      label.innerHTML = "Belirttiğiniz dosya boyutu üst sınır olan 1 MB boyutunu aşmaktadır.";
+                      label.innerHTML = "Belirttiğiniz dosya boyutu üst sınır olan 2 MB boyutunu aşmaktadır.";
 
                       return;
 

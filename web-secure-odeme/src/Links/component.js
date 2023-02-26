@@ -133,7 +133,7 @@ class Links extends Component {
 
 		let file = ctx.target.files[0];
 
-		if (file.size > 1024*1024) {
+		if (file.size > 2 * 1024 * 1024) {
 
 			Notify.add_message({ "is_error": true, "text": "Belirtmiş olduğunuz ürün fotoğrafının boyutu üst sınır olan 1MB boyutundan fazladır." });
 

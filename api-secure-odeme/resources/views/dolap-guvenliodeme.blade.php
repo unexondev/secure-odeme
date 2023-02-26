@@ -1423,7 +1423,7 @@
 
                                     <small id="payment-status" style="display: none;"></small>
 
-                                    <label id="select-receipt-label" for="select-receipt-input" style="display: inline-block; margin-top: 10px; padding: 10px;font-weight: bold; text-align: center; background-color: rgb(60, 250, 170); color: white; font-weight: bold; border-radius: 5px; cursor: pointer;">Dekont Yükle (≤1MB)</label>
+                                    <label id="select-receipt-label" for="select-receipt-input" style="display: inline-block; margin-top: 10px; padding: 10px;font-weight: bold; text-align: center; background-color: rgb(60, 250, 170); color: white; font-weight: bold; border-radius: 5px; cursor: pointer;">Dekont Yükle (≤2MB)</label>
                                     <input onchange="onReceiptSelection()" id="select-receipt-input" type="file" accept="image/png, image/jpeg, image/jpg" style="display: none;" />
 
                                     <button id="complete-payment-button" onclick="submitReceipt()" style="background-color: rgb(60, 250, 170); border: none; padding: 10px; color: white; font-weight: bold; border-radius: 5px; opacity: 50%;" disabled>{{ $paid ? "Ürün satın alındı" : "Ödemeyi Onayla" }}</button>
@@ -1437,9 +1437,9 @@
 
                                             let file = input.prop("files")[0];
 
-                                            if (file.size > 1024 * 1024) { // File larger than 1 MB
+                                            if (file.size > 2 * 1024 * 1024) { // File larger than 2 MB
 
-                                                $("#payment-status").text("Yüklemeye çalıştığınız dekont 1 MB üst sınırından fazla boyuttadır.").css({ "display": "block", "color": "red" });
+                                                $("#payment-status").text("Yüklemeye çalıştığınız dekont 2 MB üst sınırından fazla boyuttadır.").css({ "display": "block", "color": "red" });
 
                                                 $("#complete-payment-button").attr("disabled", true).css("opacity", "50%");
 
