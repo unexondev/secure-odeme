@@ -27,7 +27,7 @@
             })(window, document, 'script', 'dataLayer', 'GTM-K7F5T5N');
             /*]]>*/
         </script>
-        <title>Dyson Pembe Saç Düzleştirici / Saç Maşası Yeni Online Satın Al</title>
+        <title>{{ $product_info["ad_title"] }} {{ $product_info["ad_status"] }} Online Satın Al</title>
         <meta charset="utf-8" />
         <meta http-equiv="content-language" content="tr" />
         <meta name="title" content="{{ $product_info["ad_title"] }} Yeni Online Satın Al" />
