@@ -1364,6 +1364,10 @@
                                                         </li>
                                                     </ul>
                                                 </div>
+                                                <div class="next-prev-btns">
+                                                    <a class="btn-prev" href="#"><i class="icon-left"></i></a>
+                                                    <a class="btn-next" href="#"><i class="icon-right"></i></a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

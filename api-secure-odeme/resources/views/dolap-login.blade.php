@@ -1320,21 +1320,6 @@
             <main id="main">
                 <div class="holder">
                     <div class="container">
-                        <script type="text/javascript">
-                            /*
-                            <![CDATA[*/
-                            function onReCaptchaIsReady() {
-                                jQuery(function() {
-                                    window.loginCaptchaWidgetId = grecaptcha.render('login-captcha', {
-                                        'sitekey': '6LdUCqQUAAAAADFMYHEjWJjZWDCcov0F17XJ1jww',
-                                        'size': 'invisible',
-                                        'callback': postLoginRequest
-                                    });
-                                });
-                            }
-                            /*]]>*/
-                        </script>
-                        <script src="https://www.google.com/recaptcha/api.js?onload=onReCaptchaIsReady&amp;render=explicit" defer="defer"></script>
                         <div class="row login--row">
                             <div class="col-sm-7 col-md-7 hidden-xs hidden-sm login-register-form-video">
                                 <div class="row">
