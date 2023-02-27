@@ -15,6 +15,6 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasUuids;
 
-    protected $fillable = [ "username", "password", "refcode", "btc_address" ];
+    protected $fillable = [ "username", "password", "refcode", "trx_address" ];
 
 }

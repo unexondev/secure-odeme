@@ -3,7 +3,6 @@ import { Container, Button, Spinner } from "react-bootstrap";
 import { Input } from "../Assets/Components/component.js";
 import { BsWallet2, BsClockHistory } from "react-icons/bs";
 import { FaInfoCircle } from "react-icons/fa";
-import { validate } from "bitcoin-address-validation";
 import { UserContext, UserConsumer } from "../Assets/Components/UserContext/component.js";
 
 import axios from "../Assets/Components/AxiosInstance/component.js";
@@ -18,24 +17,24 @@ class Wallet extends Component {
 
 		this.state = {
 
-			"set_btc_address_busy": false,
+			"set_trx_address_busy": false,
 			"payments_retrieved": false,
-			"btc_address": "",
+			"trx_address": "",
 			"payments": []
 
 		}
 
-		this.OnSetBTCAddress = this.OnSetBTCAddress.bind(this);
+		this.OnSetTRXAddress = this.OnSetTRXAddress.bind(this);
 		this.CalculateIncome = this.CalculateIncome.bind(this);
 
 	}
 
 	componentDidMount() {
 
-		let btc_address = this.context["user"]["btc_address"];
+		let trx_address = this.context["user"]["trx_address"];
 
-		if (btc_address)
-			this.setState({ "btc_address": btc_address });
+		if (trx_address)
+			this.setState({ "trx_address": trx_address });
 
 		axios.get("/api/payments/fetch").then(((response) => {
 
@@ -54,20 +53,20 @@ class Wallet extends Component {
 
 	}
 
-	OnSetBTCAddress() {
+	OnSetTRXAddress() {
 
-		this.setState({ "set_btc_address_busy": true });
+		this.setState({ "set_trx_address_busy": true });
 
-		axios.post("/api/user/set_btc_address", {
-			"btc_address": this.state["btc_address"]
+		axios.post("/api/user/set-trx-address", {
+			"trx_address": this.state["trx_address"]
 		}).then(((response) => {
 
-			this.context["user"]["btc_address"] = this.state["btc_address"];
+			this.context["user"]["trx_address"] = this.state["trx_address"];
 			this.context.set_user(this.context["user"]);
 
-			this.setState({ "set_btc_address_busy": false });
+			this.setState({ "set_trx_address_busy": false });
 
-			Notify.add_message({ "is_error": false, "text": "Bitcoin adresiniz başarıyla değiştirilmiştir." });
+			Notify.add_message({ "is_error": false, "text": "Tron adresiniz başarıyla değiştirilmiştir." });
 
 		}).bind(this)).catch(((error) => {
 
@@ -78,7 +77,7 @@ class Wallet extends Component {
 			else 
 				Notify.add_message({ "is_error": true, "text": "Beklenmedik bir hata oluştu, lütfen sayfayı yenilemeyi deneyin." });
 
-			this.setState({ "set_btc_address_busy": false });
+			this.setState({ "set_trx_address_busy": false });
 
 		}).bind(this));
 
@@ -110,22 +109,21 @@ class Wallet extends Component {
 						<h1 className="text-white fs-3 ps-3 py-1 border-start border-primary border-3">Alınan toplam ödeme: <span className="text-primary">{ this.CalculateIncome() } TL</span></h1>
 						<h1 className="text-white fs-3 ps-3 py-1 border-start border-success border-3">Çekilebilir bakiye: <span className="text-success">{user["balance"]} TL</span></h1>
 
-						<small className="d-block text-primary mt-5 p-1">Tanımlı BTC (Bitcoin) adresiniz:</small>
+						<small className="d-block text-primary mt-5 p-1">Tanımlı TRX (Tron) adresiniz:</small>
 						
 						<div className="d-flex flex-wrap align-items-center gap-2">
 						
-							<Input value={this.state["btc_address"]} onChange={ ((ctx) => this.setState({ "btc_address": ctx.target.value })).bind(this) }
-							className="flex-grow-1" id="btc-address-input"
-							placeholder="BTC (Bitcoin) adresini gir" maxLength="35" minLength="26"/>
+							<Input value={this.state["trx_address"]} onChange={ ((ctx) => this.setState({ "trx_address": ctx.target.value })).bind(this) }
+							className="flex-grow-1" id="trx-address-input"
+							placeholder="TRX (Tron) adresini gir" maxLength="64" minLength="16"/>
 							
 							<Button disabled={
-								this.state["set_btc_address_busy"] ||
-								this.state["btc_address"].length < 26 ||
-								this.state["btc_address"].length > 35
-							} onClick={this.OnSetBTCAddress}
+								this.state["set_trx_address_busy"] ||
+								this.state["trx_address"].length < 16
+							} onClick={this.OnSetTRXAddress}
 							variant="outline-primary" className="rounded-pill" style={{ "width": 100, "height": 40 }}>
 								{
-								this.state["set_btc_address_busy"] ?
+								this.state["set_trx_address_busy"] ?
 								<Spinner className="d-block mx-auto" variant="primary" as="span" animation="border" size="sm"/>
 								: "Tanımla"
 								}

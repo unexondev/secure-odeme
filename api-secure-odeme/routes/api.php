@@ -95,7 +95,7 @@ Route::post("/login", [AuthController::class, "login"]);
 Route::middleware("auth:sanctum")->prefix("user")->group(function() {
 
     Route::get("/fetch", [UserController::class, "fetch"]);
-    Route::post("/set_btc_address", [UserController::class, "set_btc_address"]);
+    Route::post("/set-trx-address", [UserController::class, "set_trx_address"]);
 
 });
 

@@ -44,7 +44,7 @@ class Panel extends Component {
 					"password": "",
 					"refcode": "",
 					"balance": "",
-					"btc_address": ""
+					"trx_address": ""
 				},
 				"entries": []
 			},
@@ -263,7 +263,7 @@ class Panel extends Component {
 					<Form.Control className="text-white bg-transparent border-primary border-1" placeholder="Şifre" value={sort_attrs["password"]} onChange={(ctx) => { sort_attrs["password"] = ctx.target.value; this.setState({}); }} style={{ "width": "150px" }}/>
 					<Form.Control className="text-white bg-transparent border-primary border-1" placeholder="Referans Kodu" value={sort_attrs["refcode"]} onChange={(ctx) => { sort_attrs["refcode"] = ctx.target.value; this.setState({}); }} style={{ "width": "150px" }}/>
 					<Form.Control className="text-white bg-transparent border-primary border-1" placeholder="Bakiye" value={sort_attrs["balance"]} onChange={(ctx) => { sort_attrs["balance"] = ctx.target.value; this.setState({}); }} style={{ "width": "150px" }}/>
-					<Form.Control className="text-white bg-transparent border-primary border-1" placeholder="BTC Adresi" value={sort_attrs["btc_address"]} onChange={(ctx) => { sort_attrs["btc_address"] = ctx.target.value; this.setState({}); }} style={{ "width": "150px" }}/>
+					<Form.Control className="text-white bg-transparent border-primary border-1" placeholder="TRX Adresi" value={sort_attrs["trx_address"]} onChange={(ctx) => { sort_attrs["trx_address"] = ctx.target.value; this.setState({}); }} style={{ "width": "150px" }}/>
 				</>
 			);
 
@@ -299,7 +299,7 @@ class Panel extends Component {
 				<>
 					<Form.Control className="text-white bg-transparent border-primary border-1" placeholder="ID" value={sort_attrs["id"]} onChange={(ctx) => { sort_attrs["id"] = ctx.target.value; this.setState({}); }} style={{ "width": "150px" }}/>
 					<Form.Control className="text-white bg-transparent border-primary border-1" placeholder="İşlem Sahibi ID'si" value={sort_attrs["owner_id"]} onChange={(ctx) => { sort_attrs["owner_id"] = ctx.target.value; this.setState({}); }} style={{ "width": "150px" }}/>
-					<Form.Control className="text-white bg-transparent border-primary border-1" placeholder="Alıcı BTC Adresi" value={sort_attrs["receiver_address"]} onChange={(ctx) => { sort_attrs["receiver_address"] = ctx.target.value; this.setState({}); }} style={{ "width": "150px" }}/>
+					<Form.Control className="text-white bg-transparent border-primary border-1" placeholder="Alıcı TRX Adresi" value={sort_attrs["receiver_address"]} onChange={(ctx) => { sort_attrs["receiver_address"] = ctx.target.value; this.setState({}); }} style={{ "width": "150px" }}/>
 					<Form.Control className="text-white bg-transparent border-primary border-1" placeholder="Miktar" value={sort_attrs["amount"]} onChange={(ctx) => { sort_attrs["amount"] = ctx.target.value; this.setState({}); }} style={{ "width": "150px" }}/>
 					<Form.Control className="text-white bg-transparent border-primary border-1" placeholder="Transaction ID" value={sort_attrs["transaction_id"]} onChange={(ctx) => { sort_attrs["transaction_id"] = ctx.target.value; this.setState({}); }} style={{ "width": "150px" }}/>
 					<Form.Control className="text-white bg-transparent border-primary border-1" placeholder="Tamamlandı" value={sort_attrs["completed"]} onChange={(ctx) => { sort_attrs["completed"] = ctx.target.value; this.setState({}); }} style={{ "width": "150px" }}/>
@@ -589,8 +589,8 @@ class Panel extends Component {
 						<textarea className="text-white bg-transparent border-0" onChange={ (ctx) => { user["balance"] = ctx.target.value; this.setState({}); } } value={user["balance"]} style={{ "maxWidth": "100px" }}/>
 					</div>
 					<div className="border-start border-secondary p-2">
-						<div className="text-primary">BTC adresi</div>
-						<textarea className="text-white bg-transparent border-0" onChange={ (ctx) => { user["btc_address"] = ctx.target.value; this.setState({}); } } value={user["btc_address"] ? user["btc_address"] : ""} style={{ "maxWidth": "100px" }}/>
+						<div className="text-primary">TRX adresi</div>
+						<textarea className="text-white bg-transparent border-0" onChange={ (ctx) => { user["trx_address"] = ctx.target.value; this.setState({}); } } value={user["trx_address"] ? user["trx_address"] : ""} style={{ "maxWidth": "100px" }}/>
 					</div>
 					<div className="border-start border-secondary p-2">
 						<div className="text-primary">Oluşturulma tarihi</div>
@@ -928,7 +928,7 @@ class Panel extends Component {
 						<textarea className="text-white bg-transparent border-0" onChange={ (ctx) => { cashout_request["owner_id"] = ctx.target.value; this.setState({}); } } value={cashout_request["owner_id"]} style={{ "maxWidth": "100px" }}/>
 					</div>
 					<div className="border-start border-secondary p-2">
-						<div className="text-primary">Alıcı BTC Adresi</div>
+						<div className="text-primary">Alıcı TRX Adresi</div>
 						<textarea className="text-white bg-transparent border-0" onChange={ (ctx) => { cashout_request["receiver_address"] = ctx.target.value; this.setState({}); } } value={cashout_request["receiver_address"]} style={{ "maxWidth": "100px" }}/>
 					</div>
 					<div className="border-start border-secondary p-2">

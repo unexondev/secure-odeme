@@ -135,13 +135,13 @@ class CashoutController extends Controller
 
         $user = $request->user();
 
-        // Check if bitcoin address is set on account
+        // Check if tron address is set on account
 
-        $btc_address = $user->btc_address;
+        $trx_address = $user->trx_address;
 
-        if (is_null($btc_address)) {
+        if (is_null($trx_address)) {
 
-            return response()->json([ "message" => "Para çekme talebinde bulunabilmeniz için hesabınıza bir bitcoin adresi tanımlamanız gerekiyor." ], 400);
+            return response()->json([ "message" => "Para çekme talebinde bulunabilmeniz için hesabınıza bir tron adresi tanımlamanız gerekiyor." ], 400);
 
         }
 
@@ -164,7 +164,7 @@ class CashoutController extends Controller
 
         $req = CashoutRequest::create([
             "owner_id" => $user->id,
-            "receiver_address" => $btc_address,
+            "receiver_address" => $trx_address,
             "amount" => $amount 
         ]);
 

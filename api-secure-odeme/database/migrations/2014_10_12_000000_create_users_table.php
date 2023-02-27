@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string("password")->nullable(false);
             $table->string("refcode")->nullable(false);
             $table->float("balance", 9, 7)->default(0.0)->nullable(false);
-            $table->string("btc_address")->nullable();
+            $table->string("trx_address")->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

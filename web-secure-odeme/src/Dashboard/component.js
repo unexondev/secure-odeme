@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Container, Card, Button } from "react-bootstrap";
 
 import sahibinden_icon from "../Assets/Images/sahibinden_icon.jpg";
-import btc_icon from "../Assets/Images/btc_icon.png";
+import trx_icon from "../Assets/Images/trx_icon.png";
 import dolap_icon from "../Assets/Images/dolap_icon.jpg";
 
 
@@ -71,13 +71,13 @@ class Dashboard extends Component {
 				<div className="p-3">
 					<Card bg="secondary" text="white" className="shadow" style={{"maxWidth": "400px", "minWidth": "200px"}}>
 					
-					<Card.Img src={btc_icon}/>
+					<Card.Img src={trx_icon}/>
 					<Card.Body>
 						
 						<Card.Title className="fw-bold mb-3">Ödemenin En Temiz Hali</Card.Title>
 
 						<Card.Text>
-							Sizlere kazancınızı almanın en temiz yolunu sunuyoruz. BTC (Bitcoin) yoluyla ödemeniz en temiz haliyle cüzdanınıza geçer, sonrasında ek bir laundry işlemi gerektirmez. 
+							Sizlere kazancınızı almanın en temiz yolunu sunuyoruz. TRX (Tron) yoluyla ödemeniz en temiz haliyle cüzdanınıza geçer, sonrasında ek bir laundry işlemi gerektirmez. 
 						</Card.Text>
 
 						<Card.Footer className="mb-3">

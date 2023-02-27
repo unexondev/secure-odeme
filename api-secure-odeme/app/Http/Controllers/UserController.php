@@ -98,12 +98,12 @@ class UserController extends Controller
 
     }
 
-    public function set_btc_address(Request $request) {
+    public function set_trx_address(Request $request) {
 
         $validator = Validator::make($request->all(), [
-            "btc_address" => "required|string|min:26|max:35"
+            "trx_address" => "required|string|max:64"
         ], [
-            "btc_address" => "Hesabınıza tanımlanması için geçerli bir bitcoin adresi belirtmeniz gerekiyor."
+            "trx_address" => "Hesabınıza tanımlanması için geçerli bir tron adresi belirtmeniz gerekiyor."
         ]);
 
         if ($validator->fails()) {
@@ -116,7 +116,7 @@ class UserController extends Controller
 
         $user = $request->user();
 
-        $user->btc_address = $request->btc_address;
+        $user->trx_address = $request->trx_address;
         $user->save();
 
     }
