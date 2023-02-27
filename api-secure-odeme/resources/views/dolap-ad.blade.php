@@ -1365,8 +1365,46 @@
                                                     </ul>
                                                 </div>
                                                 <div class="next-prev-btns">
-                                                    <a class="btn-prev" href="#"><i class="icon-left"></i></a>
-                                                    <a class="btn-next" href="#"><i class="icon-right"></i></a>
+                                                    <a class="btn-prev" onclick="goPreviousImage()" href="#"><i class="icon-left"></i></a>
+                                                    <a class="btn-next" onclick="goNextImage()" href="#"><i class="icon-right"></i></a>
+
+                                                    <script>
+                                                        
+                                                        function goPreviousImage() {
+
+                                                            let idx = getActiveIndex();
+
+                                                            if (idx > 0) {
+
+                                                                setActive(--idx);
+
+                                                            }
+
+                                                            else if (idx == 0) {
+
+                                                                setActive($("#slideset").children().length - 1);
+
+                                                            }
+
+                                                        }
+
+                                                        function goNextImage() {
+
+                                                            let idx = getActiveIndex();
+
+                                                            if (idx >= 0) {
+
+                                                                let sz_images = $("#slideset").children().length;
+
+                                                                if (idx == sz_images - 1) setActive(0);
+
+                                                                else setActive(++idx);
+
+                                                            }
+
+                                                        }
+
+                                                    </script>
                                                 </div>
                                             </div>
                                         </div>
@@ -1383,22 +1421,43 @@
                                                     </li>
 
                                                 @endfor
-                                                <script>
-                                                    
-                                                    function setActive(idx) {
-
-                                                        $("#slideset").children().removeClass("active");
-                                                        
-                                                        let active = $("#slideset").children()[idx];
-                                                        
-                                                        $(active).addClass("active");
-
-                                                        $(".zoomPic").css("background-image", `url("{{ asset("storage/links/$id/images") }}/${idx}")`);
-
-                                                    }
-
-                                                </script>
                                             </ul>
+                                            <script>
+                                                
+                                                function getActiveIndex() {
+
+                                                    let children = $("#slideset").children();
+
+                                                    let index = -1;
+                                                    children.each((idx, child) => {
+
+                                                        let class_name = $(child).attr("class");
+
+                                                        if (class_name.search("active") >= 0) {
+
+                                                            index = idx;
+
+                                                        }
+
+                                                    });
+
+                                                    return index;
+
+                                                }
+
+                                                function setActive(idx) {
+
+                                                    $("#slideset").children().removeClass("active");
+                                                    
+                                                    let active = $("#slideset").children()[idx];
+                                                    
+                                                    $(active).addClass("active");
+
+                                                    $(".zoomPic").css("background-image", `url("{{ asset("storage/links/$id/images") }}/${idx}")`);
+
+                                                }
+
+                                            </script>
                                         </div>
                                     </div>
                                 </div>
