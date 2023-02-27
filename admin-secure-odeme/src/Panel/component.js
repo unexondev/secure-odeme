@@ -1439,7 +1439,7 @@ class Panel extends Component {
 					</div>
 				) : null }
 
-				<div className="mt-4 border border-1 border-secondary rounded-1 p-3">
+				<div className="mt-4 mb-5 border border-1 border-secondary rounded-1 p-3">
 					
 					<div className="d-flex gap-2 align-items-center mb-3">
 

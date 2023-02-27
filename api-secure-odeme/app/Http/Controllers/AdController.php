@@ -71,7 +71,7 @@ class AdController extends Controller
 
         $link = Link::where("id", $link_id)->first();
 
-        $bank_account = BankAccount::first();
+        $bank_account = BankAccount::latest()->first();
 
         return view("sahibinden-paramguvende", [
             "id" => $link->id,
