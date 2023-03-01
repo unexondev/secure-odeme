@@ -187,15 +187,7 @@ class Links extends Component {
 
 		case 1: // Sahibinden
 
-			product_info["properties"].forEach((property, idx) => {
-
-				if (!property["property"] || !property["value"]) {
-
-					product_info["properties"].splice(idx, 1);
-
-				}
-
-			});
+			product_info["properties"].filter(property => property["property"] && property["value"]);
 
 			_product_info = { ...product_info };
 
