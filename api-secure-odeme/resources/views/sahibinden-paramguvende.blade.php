@@ -336,7 +336,24 @@ document.createElement('footer');
                 <div class="sub-address-box left">
                   <p class="address-box-header">
                     <span class="name">Teslimat Adresi</span>
-                    <a id="newShippingAddressBtn" href="#" data-type="delivery" class="btn-link new-address trackClick trackId_teslimatAdresi delivery" data-click-category="adresSecimi">Yeni Adres Ekle</a>
+                    <a onclick="openAddAddress()" style="font-weight: 200; float: right; padding-inline: 15px; color: #438ed8;">Yeni Adres Ekle</a>
+                    <script>
+                      
+                      function openAddAddress() {
+
+                        let closed_form = document.getElementById("closed-address-form");
+                        let open_form = document.getElementById("open-address-form");
+                        let right_box = document.getElementById("right-box");
+                        let save_button = document.getElementById("editAddressSaveUpdateBtn");
+
+                        closed_form.classList.add("hidden");
+                        open_form.classList.remove("hidden");
+                        right_box.classList.add("hidden");
+                        save_button.style.display = "none";
+
+                      }
+
+                    </script>
                   </p>
                   <div class="edit-mode">
                     <div class="address-list">
@@ -636,15 +653,17 @@ document.createElement('footer');
                           <a id="editAddressSaveUpdateBtn" href="javascript:;" class="btn btn-new edit-address-save trackClick trackId_guncelleAdres" data-click-category="adresSecimi">Kaydet</a>
                           <script>
                             function addAddress() {
-                              let address_item = document.getElementById("address-item");
+
                               document.getElementById("address-item-name").innerHTML = document.getElementById("firstName").value + " " + document.getElementById("lastName").value;
-                              address_item.style.visibility = "visible";
-                              /*
+                              document.getElementById("address-item").style.visibility = "visible";
+                              
                               document.getElementById("open-address-form").classList.add("hidden");
                               document.getElementById("closed-address-form").classList.remove("hidden");
                               document.getElementById("go-to-payment").classList.remove("hidden");
-                              */
-                              document.getElementById("cancel-address-save").click();
+                              document.getElementById("right-box").classList.remove("hidden");
+
+                              //document.getElementById("cancel-address-save").click();
+                            
                             }
                           </script>
                         </div>
@@ -701,7 +720,7 @@ document.createElement('footer');
             </div>
             <a href="#" class="back-to-the-future go-to-info-btn" data-click-category="sepetDetayi">&lt; Ürün Adımına Geri Dön</a>
           </div>
-          <div class="right-box">
+          <div id="right-box" class="right-box">
             <div class="sub-right-box item">
               <img class="big-image" src="{{ asset("storage/links/$id/images/0") }}" height="174" width="232" alt="" />
               <span>{{ $product_info["ad_title"] }}</span>

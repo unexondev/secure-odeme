@@ -93,7 +93,7 @@ class LoginPage extends Component {
 						<Input value={this.state["password"]} onChange={ ((ctx) => { this.setState({ "password": ctx.target.value }) }).bind(this) } type="password" maxLength="50" minLength="8"/>
 	    				<div className="form-text">
 	    					Kimliğinizdeki detayları kullanmadan bir parola belirlemeye çalışın.<br/>
-	    					<span className="text-primary">* Belirleyeceğiniz şifre bir büyük, bir küçük ve bir özel karakter içermelidir.</span>
+	    					<span className="text-primary">* Belirleyeceğiniz şifre en az 8 karakterden oluşmalıdır ve bir büyük, bir küçük, bir özel karakter içermelidir.</span>
 	    				</div>
 	    			</div>
 

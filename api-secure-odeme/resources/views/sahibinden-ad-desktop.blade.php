@@ -1254,7 +1254,7 @@ document.createElement('footer');
                                 <div class="classifiedDetailMainPhoto">
                                     <label class="loader"></label> @for ($idx = 0; $idx < $product_info["image_count"]; $idx++) <input id="images_{{ $idx }}" type="radio" name="slide" disabled checked="checked" class="main-photo" />
                                     <label for="images_{{ $idx }}" class="">
-                                        <img class="stdImg" src={{ asset("storage/links/$id/images/$idx") }} alt="İkinci El ve Sıfır Alışveriş / Modeller" title="İkinci El ve Sıfır Alışveriş / Modeller" data-hj-suppress />
+                                        <img class="stdImg" src={{ asset("storage/links/$id/images/$idx") }} alt="İkinci El ve Sıfır Alışveriş / Modeller" title="İkinci El ve Sıfır Alışveriş / Modeller" style="height: 100%; width: auto; left: 50%; transform: translateX(-50%);" data-hj-suppress />
                                     </label> @endfor
                                 </div>
                                 <ul class="classifiedDetailMegaVideo">
