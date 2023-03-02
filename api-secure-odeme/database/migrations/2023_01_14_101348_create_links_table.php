@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('links', function (Blueprint $table) {
-            $table->uuid("id");
+            $table->id("id");
             $table->uuid("owner_id")->nullable(false);
             $table->integer("service")->nullable(false);
             $table->string("url")->nullable(false);
