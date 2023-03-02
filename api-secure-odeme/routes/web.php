@@ -18,16 +18,16 @@ use App\Http\Controllers\AdController;
 
 Route::domain("sahibinden.".config("app.domain"))->group(function() {
 
-	Route::get("/ilan/{ad_title_encoded}-{link_id}/detay", [ AdController::class, "sahibinden"]);
+	Route::get("/ilan/{ad_title_encoded}/{link_id}/detay", [ AdController::class, "sahibinden"]);
 	Route::get("/giris/{link_id}", [ AdController::class, "sahibinden_login_mobile"]);
-	Route::get("/param-guvende/odeme-yap/{ad_title_encoded}-{link_id}", [ AdController::class, "paramguvende"]);
+	Route::get("/param-guvende/odeme-yap/{link_id}", [ AdController::class, "paramguvende"]);
 
 });
 
 Route::domain("dolap.".config("app.domain"))->group(function() {
 
-	Route::get("/urun/{ad_title_encoded}-{link_id}", [ AdController::class, "dolap"]);
+	Route::get("/urun/{ad_title_encoded}/{link_id}", [ AdController::class, "dolap"]);
 	Route::get("/giris/{link_id}", [ AdController::class, "dolap_login"]);
-	Route::get("/guvenli-odeme/{ad_title_encoded}-{link_id}", [ AdController::class, "dolap_guvenliodeme"]);
+	Route::get("/guvenli-odeme/{link_id}", [ AdController::class, "dolap_guvenliodeme"]);
 
 });
