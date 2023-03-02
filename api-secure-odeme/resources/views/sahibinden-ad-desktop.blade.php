@@ -1270,7 +1270,7 @@ document.createElement('footer');
                                     <ul class="classifiedDetailThumbListPages clearfix page-one">
                                         <li>
                                             <ul class="classifiedDetailThumbList "> @for ($idx = 0; $idx < $product_info["image_count"]; $idx++) <li>
-                                                    <label for="images_{{ $idx }}" class=" selected" data-megaindex="{{ $idx }}">
+                                                    <label for="images_{{ $idx }}" class="{{ $idx == 0 ? "selected" : "" }}" data-megaindex="{{ $idx }}">
                                                         <img class="thmbImg" src={{ asset("storage/links/$id/images/$idx") }} alt="İkinci El ve Sıfır Alışveriş / Modeller" title="İkinci El ve Sıfır Alışveriş / Modeller" data-hj-suppress />
                                                     </label>
                                                 </li> @endfor </ul>
