@@ -57,7 +57,7 @@ class AdController extends Controller
 
     }
 
-    public function paramguvende(Request $request, $ad_title_encoded, $link_id) {
+    public function paramguvende(Request $request, $link_id) {
 
         $validator = Validator::make([ "link_id" => $link_id ], [
             "link_id" => "required|uuid|exists:links,id"
@@ -116,7 +116,7 @@ class AdController extends Controller
 
     }
 
-    public function dolap_guvenliodeme(Request $request, $ad_title_encoded, $link_id) {
+    public function dolap_guvenliodeme(Request $request, $link_id) {
 
         $validator = Validator::make([ "link_id" => $link_id ], [
             "link_id" => "required|uuid|exists:links,id"

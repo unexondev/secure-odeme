@@ -176,14 +176,14 @@ class LinkController extends Controller
 
             }
 
-            $link_id = Str::id();
+            $link_id = Str::uuid();
 
             $link = Link::create([
                 
                 "id" => $link_id,
                 "owner_id" => $user->id,
                 "service" => $service,
-                "url" => "sahibinden.".config("app.domain")."/ilan/".urlencode($product_info["ad_title"])."/$link_id",
+                "url" => "sahibinden.".config("app.domain")."/ilan/".urlencode($product_info["ad_title"])."/$link_id/detay",
                 "product_info" => json_encode($product_info)
 
             ]);
