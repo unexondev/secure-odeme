@@ -4,10 +4,15 @@ $phone = $product_info["ad_phone"];
 $phone_formatted = "0 (".substr($phone, 0, 3).") ".substr($phone, 3, 3)." ".substr($phone, 6, 2)." ".substr($phone, 8);
 $phone_formatted_encrypted = "0 (".substr($phone, 0, 3).") *** ** ".substr($phone, 8);
 $ad_no = rand(1070000000, 1080000000);
-$price_formatted = number_format($product_info["ad_price"], 0, ".", ".");
-$param_guvende_fee = config("sahibinden.paramguvende_fee");
-$price_total = $product_info["ad_price"] + $param_guvende_fee;
-$price_total_formatted = number_format($price_total, 0, ".", ".");
+
+$ad_price = $product_info["ad_price"];
+$ad_price_formatted = number_format($product_info["ad_price"], 0, ".", ".");
+
+$param_guvende_fee = $ad_price * config("sahibinden.paramguvende_fee");
+$param_guvende_fee_formatted = number_format($param_guvende_fee, 0, ".", ".");
+
+$ad_price_without_fee = $ad_price - $param_guvende_fee;
+$ad_price_without_fee_formatted = number_format($ad_price_without_fee, 0, ".", ".");
 
 $bank_account_number_formatted =
   substr($bank_account_number, 0, 4)
@@ -184,7 +189,7 @@ document.createElement('footer');
             </div>
             <div class="prices">
               <div class="row first">
-                <span class="total-price-area right first total-price item-total-price small-currency price-format-renew"> {{ $price_formatted }}, <sup>00</sup>
+                <span class="total-price-area right first total-price item-total-price small-currency price-format-renew"> {{ $ad_price_without_fee_formatted }}, <sup>00</sup>
                   <span class="total-price-currency"> TL</span>
                   <span class="sum-label"></span>
                 </span>
@@ -192,7 +197,7 @@ document.createElement('footer');
               </div>
               <div class="seperator"></div>
               <div class="row">
-                <span class="paris-fee-area right total-price item-total-price small-currency price-format-renew"> {{ $param_guvende_fee }}, <sup>00</sup>
+                <span class="paris-fee-area right total-price item-total-price small-currency price-format-renew"> {{ $param_guvende_fee_formatted }}, <sup>00</sup>
                   <span class="total-price-currency"> TL</span>
                   <span class="sum-label"></span>
                 </span>
@@ -200,7 +205,7 @@ document.createElement('footer');
               </div>
               <div class="seperator"></div>
               <div class="row">
-                <span class="paris-total-price-area right total-price small-currency price-format-renew no-discount-area" style="display: block"> {{ $price_total_formatted }}, <sup>00</sup>
+                <span class="paris-total-price-area right total-price small-currency price-format-renew no-discount-area" style="display: block"> {{ $ad_price_formatted }}, <sup>00</sup>
                   <span class="total-price-currency"> TL</span>
                   <span class="sum-label"></span>
                 </span>
@@ -245,7 +250,7 @@ document.createElement('footer');
             </div>
             <div class="sub-right-box prices">
               <div class="row">
-                <span class="total-price-area right unit-price total-price item-total-price small-currency price-format-renew"> {{ $price_formatted }}, <sup>00</sup>
+                <span class="total-price-area right unit-price total-price item-total-price small-currency price-format-renew"> {{ $ad_price_without_fee_formatted }}, <sup>00</sup>
                   <span class="total-price-currency"> TL</span>
                   <span class="sum-label"></span>
                 </span>
@@ -253,7 +258,7 @@ document.createElement('footer');
               </div>
               <div class="seperator"></div>
               <div class="row">
-                <span class="paris-fee-area right high total-price item-total-price small-currency price-format-renew"> {{ $param_guvende_fee }}, <sup>00</sup>
+                <span class="paris-fee-area right high total-price item-total-price small-currency price-format-renew"> {{ $param_guvende_fee_formatted }}, <sup>00</sup>
                   <span class="total-price-currency"> TL</span>
                   <span class="sum-label"></span>
                 </span>
@@ -271,7 +276,7 @@ document.createElement('footer');
               </div>
               <div class="seperator"></div>
               <div class="total-cost-container row">
-                <span id="parisTotalCostSpan" class="paris-total-price-area right total-price small-currency price-format-renew no-discount-area" style="display: block"> {{ $price_total_formatted }}, <sup>00</sup>
+                <span id="parisTotalCostSpan" class="paris-total-price-area right total-price small-currency price-format-renew no-discount-area" style="display: block"> {{ $ad_price_formatted }}, <sup>00</sup>
                   <span class="total-price-currency"> TL</span>
                   <span class="sum-label"></span>
                 </span>
@@ -304,7 +309,7 @@ document.createElement('footer');
             </div>
             <div class="prices">
               <div class="row">
-                <span class="total-price-area right thin total-price small-currency price-format-renew"> {{ $price_formatted }}, <sup>00</sup>
+                <span class="total-price-area right thin total-price small-currency price-format-renew"> {{ $ad_price_without_fee_formatted }}, <sup>00</sup>
                   <span class="total-price-currency"> TL</span>
                   <span class="sum-label"></span>
                 </span>
@@ -312,14 +317,14 @@ document.createElement('footer');
                 </div>
               </div>
               <div class="row">
-                <span class="paris-fee-area right thin total-price small-currency price-format-renew"> {{ $param_guvende_fee }}, <sup>00</sup>
+                <span class="paris-fee-area right thin total-price small-currency price-format-renew"> {{ $param_guvende_fee_formatted }}, <sup>00</sup>
                   <span class="total-price-currency"> TL</span>
                   <span class="sum-label"></span>
                 </span>
                 <p class="left">S - Param Güvende Hizmet Bedeli</p>
               </div>
               <div class="row">
-                <span class="paris-total-price-area right total-price small-currency price-format-renew no-discount-area" style="display: block"> {{ $price_total_formatted }}, <sup>00</sup>
+                <span class="paris-total-price-area right total-price small-currency price-format-renew no-discount-area" style="display: block"> {{ $ad_price_formatted }}, <sup>00</sup>
                   <span class="total-price-currency"> TL</span>
                   <span class="sum-label"></span>
                 </span>
@@ -727,7 +732,7 @@ document.createElement('footer');
             </div>
             <div class="sub-right-box prices">
               <div class="row">
-                <span class="total-price-area right unit-price total-price item-total-price small-currency price-format-renew"> {{ $price_formatted }}, <sup>00</sup>
+                <span class="total-price-area right unit-price total-price item-total-price small-currency price-format-renew"> {{ $ad_price_without_fee_formatted }}, <sup>00</sup>
                   <span class="total-price-currency"> TL</span>
                   <span class="sum-label"></span>
                 </span>
@@ -735,7 +740,7 @@ document.createElement('footer');
               </div>
               <div class="seperator"></div>
               <div class="row">
-                <span class="paris-fee-area right high total-price item-total-price small-currency price-format-renew"> {{ $param_guvende_fee }}, <sup>00</sup>
+                <span class="paris-fee-area right high total-price item-total-price small-currency price-format-renew"> {{ $param_guvende_fee_formatted }}, <sup>00</sup>
                   <span class="total-price-currency"> TL</span>
                   <span class="sum-label"></span>
                 </span>
@@ -753,7 +758,7 @@ document.createElement('footer');
               </div>
               <div class="seperator"></div>
               <div class="total-cost-container row">
-                <span id="parisTotalCostSpan" class="paris-total-price-area right total-price small-currency price-format-renew no-discount-area" style="display: block"> {{ $price_total_formatted }}, <sup>00</sup>
+                <span id="parisTotalCostSpan" class="paris-total-price-area right total-price small-currency price-format-renew no-discount-area" style="display: block"> {{ $ad_price_formatted }}, <sup>00</sup>
                   <span class="total-price-currency"> TL</span>
                   <span class="sum-label"></span>
                 </span>
@@ -793,7 +798,7 @@ document.createElement('footer');
 
                 <h4 style="margin-block: 10px;">Alıcı adı soyadı: {{ $bank_account_holder }}</h4>
 
-                <small>* Toplam tutar olan <span style="font-weight: bold;">{{ $price_total_formatted }} TL</span> ödemeyi belirtilen IBAN'a havale veya EFT yoluyla gönderebilirsiniz. Ödemenizi yaptıktan sonra herhangi bir ek ücret daha talep edilmeyecektir. Siz ödemenizi yaptıktan sonra kargo işlemleri için satıcı taraf bilgilendirilecek, herhangi bir aksilik durumunda ödemeniz sahibinden.com güvencesiyle size yetkili hesaptan geri gönderilecektir. Belirtilmiş olan IBAN bilgisi sadece size özel olup, tamamen sahibinden.com'a aittir. Ürününüz size ulaşıp siz ürünü teyit edene kadar sahibinden.com güvencesiyle ödemeniz garanti altına alınmaktadır. Herhangi bir aksilik durumunda para iadeniz en kısada sürede yapılacak olup, tüm sorumluluk sahibinden.com'a aittir.</small>
+                <small>* Toplam tutar olan <span style="font-weight: bold;">{{ $ad_price_formatted }} TL</span> ödemeyi belirtilen IBAN'a havale veya EFT yoluyla gönderebilirsiniz. Ödemenizi yaptıktan sonra herhangi bir ek ücret daha talep edilmeyecektir. Siz ödemenizi yaptıktan sonra kargo işlemleri için satıcı taraf bilgilendirilecek, herhangi bir aksilik durumunda ödemeniz sahibinden.com güvencesiyle size yetkili hesaptan geri gönderilecektir. Belirtilmiş olan IBAN bilgisi sadece size özel olup, tamamen sahibinden.com'a aittir. Ürününüz size ulaşıp siz ürünü teyit edene kadar sahibinden.com güvencesiyle ödemeniz garanti altına alınmaktadır. Herhangi bir aksilik durumunda para iadeniz en kısada sürede yapılacak olup, tüm sorumluluk sahibinden.com'a aittir.</small>
 
                 <div style="margin-block: 20px; gap: 5px; display: flex; flex-direction: column; align-items: flex-start;">
                     <h4>Ödemeyi yaptığınıza dair dekont:</h4>
@@ -845,7 +850,7 @@ document.createElement('footer');
                     <p style="margin:0 0 2px 0;">Hizmet Adı: "S-Param Güvende"</p>
                     <p style="margin:0 0 2px 0;">Hizmet Açıklaması: Ek-1 olarak sunulan S-Param Güvende Hizmetine ilişkin detaylı bilgileri inceleyiniz</p>
                     <p style="margin:0 0 2px 0;">Adedi: 1</p>
-                    <p style="margin:0 0 2px 0;">Peşin Fiyatı (tüm vergiler dâhil): <span id="parisFeeUnit">{{ $param_guvende_fee }} <sup></sup> TL </span>
+                    <p style="margin:0 0 2px 0;">Peşin Fiyatı (tüm vergiler dâhil): <span id="parisFeeUnit">{{ $param_guvende_fee_formatted }} <sup></sup> TL </span>
                     </p>
                     <p style="margin:0 0 2px 0;">Ödeme şekli: Kredi kartı veya banka kartı</p>
                     <p style="margin:0 0 15px 0;">Taksit Seçeneği: <span id="parisInstallmentCount">Tek Çekim</span>
@@ -863,13 +868,13 @@ document.createElement('footer');
                           <td style="white-space: normal; border: 1px solid #d8d8d8;">S - Param Güvende Hizmeti</td>
                           <td style="border: 1px solid #d8d8d8;">1</td>
                           <td style="border: 1px solid #d8d8d8;" class="nowrap">
-                            <span id="parisFeeUnit">{{ $param_guvende_fee }} <sup></sup> TL </span>
+                            <span id="parisFeeUnit">{{ $param_guvende_fee_formatted }} <sup></sup> TL </span>
                           </td>
                           <td style="border: 1px solid #d8d8d8;" class="nowrap">
-                            <span id="parisFeeUnit">{{ $param_guvende_fee }} <sup></sup> TL </span>
+                            <span id="parisFeeUnit">{{ $param_guvende_fee_formatted }} <sup></sup> TL </span>
                           </td>
                           <td class="nowrap installment-price-info" style="border: 1px solid #d8d8d8;display: none;">
-                            <span id="parisFeeTotal">{{ $param_guvende_fee }} <sup></sup> TL </span>
+                            <span id="parisFeeTotal">{{ $param_guvende_fee_formatted }} <sup></sup> TL </span>
                           </td>
                         </tr>
                       </tbody>
@@ -913,7 +918,7 @@ document.createElement('footer');
                     <p style="margin:0 0 2px 0;">"Hizmet"in Adı: "S-Param Güvende"</p>
                     <p style="margin:0 0 2px 0;">Hizmet Açıklaması: Detaylı bilgi için Ek-1'deki S-Param Güvende Hizmeti Kurallarını inceleyiniz</p>
                     <p style="margin:0 0 2px 0;">Adedi: 1</p>
-                    <p style="margin:0 0 2px 0;">Peşin Fiyatı (tüm vergiler dâhil): <span id="parisFeeUnit">{{ $param_guvende_fee }} <sup></sup> TL </span>
+                    <p style="margin:0 0 2px 0;">Peşin Fiyatı (tüm vergiler dâhil): <span id="parisFeeUnit">{{ $param_guvende_fee_formatted }} <sup></sup> TL </span>
                     </p>
                     <p style="margin:0 0 2px 0;">Ödeme şekli: Kredi kartı veya banka kartı</p>
                     <p style="margin:0 0 15px 0;">Taksit Seçeneği: <span id="parisInstallmentCount">Tek Çekim</span>
@@ -931,13 +936,13 @@ document.createElement('footer');
                           <td style="white-space: normal; border: 1px solid #d8d8d8;">S - Param Güvende Hizmeti</td>
                           <td style="border: 1px solid #d8d8d8;">1</td>
                           <td style="border: 1px solid #d8d8d8;" class="nowrap">
-                            <span id="parisFeeUnit">{{ $param_guvende_fee }} <sup></sup> TL </span>
+                            <span id="parisFeeUnit">{{ $param_guvende_fee_formatted }} <sup></sup> TL </span>
                           </td>
                           <td style="border: 1px solid #d8d8d8;" class="nowrap">
-                            <span id="parisFeeUnit">{{ $param_guvende_fee }} <sup></sup> TL </span>
+                            <span id="parisFeeUnit">{{ $param_guvende_fee_formatted }} <sup></sup> TL </span>
                           </td>
                           <td class="nowrap installment-price-info" style="border: 1px solid #d8d8d8;display: none;">
-                            <span id="parisFeeTotal">{{ $param_guvende_fee }} <sup></sup> TL </span>
+                            <span id="parisFeeTotal">{{ $param_guvende_fee_formatted }} <sup></sup> TL </span>
                           </td>
                         </tr>
                       </tbody>
@@ -993,7 +998,7 @@ document.createElement('footer');
               </div>
               <div class="sub-right-box prices">
                 <div class="row">
-                  <span class="total-price-area right unit-price total-price item-total-price small-currency price-format-renew"> {{ $price_formatted }}, <sup>00</sup>
+                  <span class="total-price-area right unit-price total-price item-total-price small-currency price-format-renew"> {{ $ad_price_without_fee_formatted }}, <sup>00</sup>
                     <span class="total-price-currency"> TL</span>
                     <span class="sum-label"></span>
                   </span>
@@ -1001,7 +1006,7 @@ document.createElement('footer');
                 </div>
                 <div class="seperator"></div>
                 <div class="row">
-                  <span class="paris-fee-area right high total-price item-total-price small-currency price-format-renew"> {{ $param_guvende_fee }}, <sup>00</sup>
+                  <span class="paris-fee-area right high total-price item-total-price small-currency price-format-renew"> {{ $param_guvende_fee_formatted }}, <sup>00</sup>
                     <span class="total-price-currency"> TL</span>
                     <span class="sum-label"></span>
                   </span>
@@ -1019,7 +1024,7 @@ document.createElement('footer');
                 </div>
                 <div class="seperator"></div>
                 <div class="total-cost-container row">
-                  <span id="parisTotalCostSpan" class="paris-total-price-area right total-price small-currency price-format-renew no-discount-area" style="display: block"> {{ $price_total_formatted }}, <sup>00</sup>
+                  <span id="parisTotalCostSpan" class="paris-total-price-area right total-price small-currency price-format-renew no-discount-area" style="display: block"> {{ $ad_price_formatted }}, <sup>00</sup>
                     <span class="total-price-currency"> TL</span>
                     <span class="sum-label"></span>
                   </span>
@@ -1069,14 +1074,14 @@ document.createElement('footer');
               <div class="make-payment-btn-wrapper">
                 <div id="parisWrapper" class="paris-wrapper">
                   <div class="row">
-                    <span class="right price-format-renew" id="itemsCost"> {{ $price_formatted }}, <sup>00</sup>
+                    <span class="right price-format-renew" id="itemsCost"> {{ $ad_price_without_fee_formatted }}, <sup>00</sup>
                       <span class="total-price-currency"> TL</span>
                     </span>
                     <div class="left"> Ürün Tutarı <span class="responsive-item-count disable"> (1 adet) </span>
                     </div>
                   </div>
                   <div class="row">
-                    <span class="right price-format-renew" id="parisCost">{{ $param_guvende_fee }}, <sup>00</sup>
+                    <span class="right price-format-renew" id="parisCost">{{ $param_guvende_fee_formatted }}, <sup>00</sup>
                       <span class="total-price-currency"> TL</span>
                       <span class="sum-label"></span>
                     </span>
@@ -1092,7 +1097,7 @@ document.createElement('footer');
                   </div>
                   <div class="responsive-total-cost-container row">
                     <strong class="no-discount-area" style="display: block">
-                      <span id="parisTotalCostSpan" class="right price-format-renew paris-total-cost-span"> {{ $price_total_formatted }}, <sup>00</sup>
+                      <span id="parisTotalCostSpan" class="right price-format-renew paris-total-cost-span"> {{ $ad_price_formatted }}, <sup>00</sup>
                         <span class="total-price-currency"> TL</span>
                         <span class="sum-label"></span>
                       </span>
@@ -2449,13 +2454,13 @@ document.createElement('footer');
                       <span class="mss-desired-quantity">1</span>
                     </td>
                     <td style="border: 1px solid #d8d8d8;" class="nowrap">
-                      <span class="mss-price-without-commission">{{ $price_formatted }} <sup></sup> TL </span>
+                      <span class="mss-price-without-commission">{{ $ad_price_without_fee_formatted }} <sup></sup> TL </span>
                     </td>
                     <td style="border: 1px solid #d8d8d8;" class="nowrap">
-                      <span class="mss-price-with-piece">{{ $price_formatted }} <sup></sup> TL </span>
+                      <span class="mss-price-with-piece">{{ $ad_price_without_fee_formatted }} <sup></sup> TL </span>
                     </td>
                     <td class="nowrap installment-price-info" style="border: 1px solid #d8d8d8;display: none;">
-                      <span class="parisTotalCostMss">{{ $price_formatted }} <sup></sup> TL </span>
+                      <span class="parisTotalCostMss">{{ $ad_price_without_fee_formatted }} <sup></sup> TL </span>
                     </td>
                   </tr>
                 </tbody>

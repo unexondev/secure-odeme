@@ -4,9 +4,11 @@ $phone = $product_info["ad_phone"];
 $phone_formatted = "0 (".substr($phone, 0, 3).") ".substr($phone, 3, 3)." ".substr($phone, 6, 2)." ".substr($phone, 8);
 $phone_formatted_encrypted = "0 (".substr($phone, 0, 3).") *** ** ".substr($phone, 8);
 $ad_no = rand(1070000000, 1080000000);
-$ad_price_formatted = number_format($product_info["ad_price"], 0, ".", ".");
+$ad_price = $product_info["ad_price"];
+$ad_price_formatted = number_format($ad_price - $ad_price * config("sahibinden.paramguvende_fee"), 0, ".", ".");
 
 @endphp
+
 
 <!doctype html>
 <html lang="tr" ng-app="sahibindenResponsive">

@@ -4,7 +4,8 @@ $phone = $product_info["ad_phone"];
 $phone_formatted = "0 (".substr($phone, 0, 3).") ".substr($phone, 3, 3)." ".substr($phone, 6, 2)." ".substr($phone, 8);
 $phone_formatted_encrypted = "0 (".substr($phone, 0, 3).") *** ** ".substr($phone, 8);
 $ad_no = rand(1070000000, 1080000000);
-$price_formatted = number_format($product_info["ad_price"], 0, ".", ".");
+$ad_price = $product_info["ad_price"];
+$ad_price_formatted = number_format($ad_price - $ad_price * config("sahibinden.paramguvende_fee"), 0, ".", ".");
 
 @endphp
 
@@ -1222,7 +1223,7 @@ document.createElement('footer');
                             <div class="classified-sticky-header">
                                 <strong>{{ $product_info["ad_title"] }}</strong>
                                 <span class="classified-sticky-number">İlan No:&nbsp;{{ $ad_no }}</span>
-                                <span class="sticky-price"> {{ $price_formatted }} TL</span>
+                                <span class="sticky-price"> {{ $ad_price_formatted }} TL</span>
                                 <ul class="sticky-classified-events ">
                                     <li>
                                         <a class="phone-info trackClick trackId_sticky_ara_normal tipitip-trigger" data-close-event="click" data-position="south" data-content="Numaraları Göster"></a>
@@ -1285,7 +1286,7 @@ document.createElement('footer');
                             <!-- For the Classified Photos Loading Report -->
                             <div class="classifiedInfo ">
                                 <h3>
-                                    {{ $price_formatted }} TL <input id="priceHistoryFlag" type="hidden" value="">
+                                    {{ $ad_price_formatted }} TL <input id="priceHistoryFlag" type="hidden" value="">
                                     <input id="priceHistoryClassifiedId" type="hidden" value="{{ $ad_no }}">
                                     <input id="priceHistoryFavorite" type="hidden" value="">
                                     <div id="price-history-wrapper" class="price-history-wrapper">
@@ -1340,7 +1341,7 @@ document.createElement('footer');
                                         </div>
                                     </div>
                                 </h3>
-                                <input type="hidden" id="favoriteClassifiedPrice" value=" {{ $price_formatted }} TL">
+                                <input type="hidden" id="favoriteClassifiedPrice" value=" {{ $ad_price_formatted }} TL">
                                 <h2>
                                     <a data-click-category="İlan Detay Events" data-click-event="Click - Detay Alanı">
                                         {{ $product_info["ad_province"] }}</a>
@@ -1925,7 +1926,7 @@ document.createElement('footer');
                     <a class="sticky-header-remove-favorites" href="javascript:;">İlanı Favorilerimden Çıkar</a>
                 </div>
                 <div class="row sticky-attributes">
-                    <span class="sticky-header-attribute price">{{ $price_formatted }} TL</span>
+                    <span class="sticky-header-attribute price">{{ $ad_price_formatted }} TL</span>
                 </div>
                 <div class="sticky-header-info-box">
                     <div class="sticky-header-rel">

@@ -187,9 +187,9 @@ class Links extends Component {
 
 		case 1: // Sahibinden
 
-			product_info["properties"].filter(property => property["property"] && property["value"]);
-
 			_product_info = { ...product_info };
+
+			_product_info["properties"] = _product_info["properties"].filter(property => property["property"] && property["value"]);
 
 			delete _product_info["images"];
 			delete _product_info["files"];
@@ -397,7 +397,7 @@ class Links extends Component {
 									</div>
 
 									<div className="mb-3">
-										<label className="form-label text-white">Ürün fiyatı (+500 TL Param Güvende ücreti)</label>
+										<label className="form-label text-white">Ürün fiyatı (Param Güvende bedeli dahil)</label>
 										<Input value={product_info["ad_price"]} onChange={
 											((ctx) => { if (/^[0-9]+$/.test(ctx.target.value) || !ctx.target.value.length)
 												this.setState({ "product_info": { ...product_info, "ad_price": ctx.target.value } }) }).bind(this)
