@@ -1936,7 +1936,7 @@ document.createElement('footer');
                         </div>
                         <div class="sticky-header-info-box-content">
                             <div class="sticky-header-store-information" data-nosnippet>
-                                <span class="sticky-header-store-information-text sticky-header-indivudial-name  full-text"> Metin&nbsp;Medet</span>
+                                <span class="sticky-header-store-information-text sticky-header-indivudial-name  full-text">{{ $product_info["ad_seller"] }}</span>
                                 <span class="sticky-header-store-information-text sticky-header-registration-date  full-text"> Hesap Açma Tarihi <span>Ocak 2020</span>
                                 </span>
                                 <span class="sticky-header-store-information-text sticky-header-phone risky-category">

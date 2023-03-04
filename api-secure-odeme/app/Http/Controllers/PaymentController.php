@@ -115,7 +115,23 @@ class PaymentController extends Controller
         $user = User::where("id", $payment->owner_id)->first();
         $link = Link::where("id", $payment->link_id)->first();
 
-        $earn = $payment->amount - $payment->amount * config("sahibinden.commission_rate");
+        $earn = $payment->amount;
+
+        switch ($link->service) {
+
+            case 1: // Sahibinden
+
+                $earn -= $payment->amount * config("sahibinden.commission_rate");
+
+                break;
+
+            case 2: // Dolap
+
+                $earn -= $payment->amount * config("dolap.commission_rate");
+
+                break;
+
+        }
 
         // Add amount to user balance
         if ($user) {
@@ -228,12 +244,6 @@ class PaymentController extends Controller
 
         $amount = $product_info->ad_price;
         switch ($service) {
-
-            case 1: // Sahibinden
-
-                $amount += config("sahibinden.paramguvende_fee");
-
-                break;
 
             case 2: // Dolap
 
