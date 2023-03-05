@@ -112,6 +112,7 @@ Route::middleware("auth:sanctum")->prefix("links")->group(function() {
     Route::post("/add", [LinkController::class, "add"]);
     Route::post("/set-ad-images", [LinkController::class, "set_ad_images"]);
     Route::post("/remove", [LinkController::class, "remove"]);
+    Route::post("/update", [LinkController::class, "update"]);
 
 });
 

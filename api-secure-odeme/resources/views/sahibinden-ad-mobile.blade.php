@@ -1081,10 +1081,10 @@ $ad_price_formatted = number_format($ad_price - $ad_price * config("sahibinden.p
         <dialog data-title="İşlemler" data-extra-class="user-action-lightbox paris-user-action-lightbox" visible="showUserActions.visible"
                 non-closable="true">
                     <div class="dialog-links">
-                        <a href="/satici-profili/hunver413/">Satıcı Profili</a>
+                        <a>Satıcı Profili</a>
                         <a class="add-classified-seller-favorite" track-event track-label="iletisim_bilgileri_takip_et" href="#" s-click='parisFollowUser(upid)' ng-if='!ifs' ng-show="enableFavoriteButton">Favori Satıcılarıma Ekle</a>
                         <a track-event track-label="iletisim_bilgileri_takip_etme" href="#" s-click='parisUnfollowUser(upid)' ng-if='ifs' ng-show="enableFavoriteButton">Favori Satıcılarımdan Çıkar</a>
-                        <a   data-link="/arama?userId=aI_ZiSoypK3J6UzMjzAHY2Q" href="/arama?userId=aI_ZiSoypK3J6UzMjzAHY2Q" ng-click="clickAllClassifieds($event)" track-event track-label="iletisim_bilgileri_tum_ilanlari">Tüm İlanları</a>
+                        <a ng-click="clickAllClassifieds($event)" track-event track-label="iletisim_bilgileri_tum_ilanlari">Tüm İlanları</a>
                         </div>
                     <div class="actions-loading" ng-show="followUserLoading"></div>
                     <p class="dialog-buttons">

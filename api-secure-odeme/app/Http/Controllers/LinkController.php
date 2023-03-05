@@ -47,7 +47,7 @@ class LinkController extends Controller
 
     }
 
-    public function __remove(Request $request) {
+    public function _remove(Request $request) {
 
         $validator = Validator::make($request->all(), [
             "id" => "required|uuid|exists:links"
@@ -314,6 +314,35 @@ class LinkController extends Controller
         $query->delete();
 
         Storage::disk("public")->deleteDirectory("links/$link->id/images");
+
+    }
+
+    public function update(Request $request) {
+
+        $user = $request->user();
+
+        $validator = Validator::make($request->all(), [
+            "link_id" => [
+                "required",
+                "uuid",
+                Rule::exists("links", "id")->where("owner_id", $user->id)
+            ],
+            "product_info" => "required|array"
+        ], [
+            "link_id" => "Veri güncelleme işlemi için geçerli bir ID belirtmeniz gerekiyor."
+        ]);
+
+        if ($validator->fails()) {
+
+            $err = $validator->errors()->first();
+
+            return response()->json([ "message" => $err ], 400);
+
+        }
+
+        Link::where("id", $request->link_id)->update([
+            "product_info" => json_encode($request->product_info)
+        ]);
 
     }
 

@@ -241,7 +241,7 @@ document.createElement('footer');
                 <p class="last">Ürün ilandakinden farklı çıkarsa satıcıya kargolayıp ürün tutarını geri alabilirsiniz. </p>
               </div>
             </div>
-            <a href="/ilan/ikinci-el-ve-sifir-alisveris-cep-telefonu-modeller-nokta-hatasiz-{{ $ad_no }}/detay" class="back-to-the-future trackLinkClick trackId_alisveriseDon_v3" data-click-category="sepetDetayi">&lt; İlana Geri Dön</a>
+            <a href="javascript:history.back()" class="back-to-the-future trackLinkClick trackId_alisveriseDon_v3" data-click-category="sepetDetayi">&lt; İlana Geri Dön</a>
           </div>
           <div class="right-box">
             <div class="sub-right-box item">
