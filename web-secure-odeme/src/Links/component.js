@@ -494,7 +494,7 @@ class Links extends Component {
 
 											<ModalBS.Body className="text-white">
 												
-												Aynı anda toplamda <span className="text-primary">5</span> tane link bulundurma hakkınız bulunmaktadır. Link oluşturmak istediğinize emin misiniz?
+												Aynı anda toplamda <span className="text-primary">10</span> tane link bulundurma hakkınız bulunmaktadır. Link oluşturmak istediğinize emin misiniz?
 
 											</ModalBS.Body>
 

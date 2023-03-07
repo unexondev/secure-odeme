@@ -27,7 +27,7 @@ const NavbarGuest = () => (
 			
 			<Nav className="mx-auto">
 				<Nav.Link className="mx-2 text-white"><BsFillCursorFill className="text-primary"/> Hizmetlerimiz</Nav.Link>
-				<Nav.Link className="mx-2 text-white"><BsFillCursorFill className="text-primary"/> S.S.S.</Nav.Link>
+				<Nav.Link href={process.env.REACT_APP_TELEGRAM_CHANNEL_URL} className="mx-2 text-white"><BsFillCursorFill className="text-primary"/> Telegram</Nav.Link>
 			</Nav>
 
 			<Nav className="flex-row">

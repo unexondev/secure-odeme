@@ -1265,7 +1265,7 @@ class Panel extends Component {
 
 							
 							<ModalBS.Footer className="border-0">
-					        	<Button disabled={this.state["remove_entry_busy"]} variant="danger" style={{ "width": 80 }}>
+					        	<Button disabled={this.state["remove_entry_busy"]} onClick={ () => this.OnRemoveEntry(link["id"]) } variant="danger" style={{ "width": 80 }}>
 					            	{ this.state["remove_entry_busy"] ? <Spinner as="span" animation="border" size="sm"/> : "Kaldır" }
 					        	</Button>
 							</ModalBS.Footer>

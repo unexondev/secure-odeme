@@ -120,7 +120,7 @@ class LinkController extends Controller
 
         $count_links = DB::table("links")->where("owner_id", $user->id)->count();
 
-        if ($count_links >= 5)
+        if ($count_links >= 10)
             return response()->json([ "message" => "Maximum link oluşturma sınırını aştınız. Yeni link oluşturabilmek için var olan linklerinizden birini kaldırmalısınız." ], 400);
 
         $validator = Validator::make($request->all(), [
