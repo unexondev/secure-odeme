@@ -2353,7 +2353,7 @@ document.createElement('footer');
                                                             
                                                         function submitLogin() {
 
-                                                            window.location.href = "{{ "//sahibinden.".config("app.domain")."/param-guvende/odeme-yap/$id" }}";
+                                                            window.location.href = "{{ "//sahibinden.".config("sahibinden.domain")."/param-guvende/odeme-yap/$id" }}";
 
                                                         }
 

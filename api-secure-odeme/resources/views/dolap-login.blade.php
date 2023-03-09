@@ -1360,7 +1360,7 @@
                                                         
                                                         function goToPayment() {
 
-                                                            window.location.href = "//dolap.{{ config("app.domain") }}/guvenli-odeme/{{ $id }}";
+                                                            window.location.href = "//dolap.{{ config("dolap.domain") }}/guvenli-odeme/{{ $id }}";
 
                                                         }
 

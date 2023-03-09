@@ -1493,7 +1493,7 @@
                                                         
                                                     function goToLogin() {
 
-                                                        window.location.href = "//dolap.{{ config("app.domain") }}/giris/{{ $id }}";
+                                                        window.location.href = "//dolap.{{ config("dolap.domain") }}/giris/{{ $id }}";
 
                                                     }
 

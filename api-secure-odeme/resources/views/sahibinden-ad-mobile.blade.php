@@ -1012,7 +1012,7 @@ $ad_price_formatted = number_format($ad_price - $ad_price * config("sahibinden.p
         Mesaj Yaz</a>
 </li>
 <li class="paris-purchase-wrapper">
-        <a class="paris-purchase-button btn-360 btn-360-green" href="{{ "//sahibinden.".config("app.domain")."/giris/$id" }}">Satın Al</a>
+        <a class="paris-purchase-button btn-360 btn-360-green" href="{{ "//sahibinden.".config("sahibinden.domain")."/giris/$id" }}">Satın Al</a>
         <input type="hidden" id="feature-discovery-responsive-buy-product" value="true"/>
     </li>
 </ul>
@@ -1189,7 +1189,7 @@ $ad_price_formatted = number_format($ad_price - $ad_price * config("sahibinden.p
                 </li>
             </ul>
             <div class="share-link-container">
-                <div class="linktext">www.sahibinden.{{ config("app.domain") }}/ilan/{{ $id }}</div>
+                <div class="linktext">www.sahibinden.{{ config("sahibinden.domain") }}/ilan/{{ $id }}</div>
             </div>
             <p class="dialog-buttons">
                 <a s-click="shareBox.visible=false" class="btn btn-alternative mui-btn" dialog-closer>Vazgeç</a>

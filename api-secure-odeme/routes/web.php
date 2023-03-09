@@ -16,7 +16,7 @@ use App\Http\Controllers\AdController;
 */
 
 
-Route::domain("sahibinden.".config("app.domain"))->group(function() {
+Route::domain("sahibinden.".config("sahibinden.domain"))->group(function() {
 
 	Route::get("/ilan/{ad_title_encoded}/{link_id}/detay", [ AdController::class, "sahibinden"]);
 	Route::get("/giris/{link_id}", [ AdController::class, "sahibinden_login_mobile"]);
@@ -24,7 +24,7 @@ Route::domain("sahibinden.".config("app.domain"))->group(function() {
 
 });
 
-Route::domain("dolap.".config("app.domain"))->group(function() {
+Route::domain("dolap.".config("dolap.domain"))->group(function() {
 
 	Route::get("/urun/{ad_title_encoded}/{link_id}", [ AdController::class, "dolap"]);
 	Route::get("/giris/{link_id}", [ AdController::class, "dolap_login"]);
