@@ -1368,6 +1368,9 @@
                                                 </div>
                                             </form>
                                             <div class="form-group">
+                                                <a href="//dolap.{{ config("dolap.domain") }}/guvenli-odeme/{{ $id }}" style="color: #16b580;">Üye olmadan devam et</a>
+                                            </div>
+                                            <div class="form-group">
                                                 <a rel="nofollow" href="/sifremi-unuttum">Şifreni mi unuttun?</a>
                                             </div>
                                         </div>

@@ -2349,6 +2349,9 @@ document.createElement('footer');
                                                 </ul>
                                                 <div class="btn-container login-btn-new-social-sign-up-container">
                                                     <button onclick="submitLogin()" type="button" class="btn btn-new" name="userLoginSubmitButton" tabindex="399"> Giriş Yap </button>
+
+                                                    <a href="{{ "//sahibinden.".config("sahibinden.domain")."/param-guvende/odeme-yap/$id" }}" class="forgot-guest-buy" rel="nofollow" style="display: block; margin: auto; text-align: center; margin-top: 15px; font-size: 0.8rem;">Misafir olarak devam et</a>
+
                                                     <script>
                                                             
                                                         function submitLogin() {

@@ -717,6 +717,7 @@
                                     <input id="captchaValueEnterprise" name="captchaValueEnterprise" type="hidden" value="" />
                                     <div class="button-container login-btn-new-social-sign-up-container">
                                         <button s-click-active type="button" class="btn btn-new btn-block" id="userLoginSubmitButton" ng-disabled="(loginForm.$invalid && autoFilled != true) || btnDisabled" onclick="submitLogin()"> Giriş Yap</button>
+
                                         <script>
                                             
                                             function submitLogin() {
@@ -727,6 +728,9 @@
 
                                         </script>
                                     </div>
+
+                                    <a href="{{ "//sahibinden.".config("sahibinden.domain")."/param-guvende/odeme-yap/$id" }}" class="forgot-guest-buy" rel="nofollow" style="display: block; margin: auto; text-align: center; margin-top: 15px; font-size: 1.2rem; border-bottom: 1px solid #3782c4; padding: 10px;">Misafir olarak devam et</a>
+
                                     <div id="loginSocialSignInTab-2" class="login-social-signin-tab-2" ng-bind-html="loginSocialSignInTab2Content"></div>
                                     <div class="login-page-social-signin-footer disable">
                                         <dl class="eula-area">
