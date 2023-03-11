@@ -503,7 +503,7 @@ class MyLinks extends Component {
 
 									        		})()
 
-									        	} onClick={ ((ctx) => { this.OnUpdateLink(link); }).bind(this) } variant="primary">
+									        	} onClick={ ((ctx) => { this.OnUpdateLink(link); }).bind(this) } variant="primary" style={{ "width": 80, "height": 40 }}>
 									            	{
 									            		this.state["update_link_busy"] ?
 									            		<Spinner className="d-block mx-auto" as="span" animation="border" size="sm"/>

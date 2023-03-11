@@ -1339,10 +1339,10 @@
                                 <div class="slideshow gallery-js-ready autorotation-disabled">
                                     <div class="slideset-holder">
                                         <div class="slideset">
-                                            <div class="bgstretch slide zoomPic" data-fancybox-href="#fancyGallery1065613536" data-fancybox-group="gallery" style="background-color: #FFFFFF">
+                                            <div class="image-view bgstretch slide zoomPic" data-fancybox-href="#fancyGallery1065613536" data-fancybox-group="gallery" style="background-color: #FFFFFF">
                                                 <span data-srcset="{{ asset("storage/links/$id/images/0") }}" data-imageid="image1065613536"></span>
                                                 <div style="display: none;" id="fancyGallery1065613536">
-                                                    <img class="lazy" style="width:100%;height:100%;" src="{{ asset("storage/links/$id/images/0") }}" />
+                                                <img id="image-view-focus" class="lazy" style="width:100%;height:100%;" src="{{ asset("storage/links/$id/images/0") }}" />
                                                 </div>
                                             </div>
                                             <a href="#" class="like-btn visible-xs product-likes product-like-btn" data-event-source="like" data-product-like-count="43">
@@ -1373,18 +1373,23 @@
                                                         function goPreviousImage() {
 
                                                             let idx = getActiveIndex();
+                                                            let new_idx;
 
                                                             if (idx > 0) {
 
-                                                                setActive(--idx);
+                                                                new_idx = --idx;
 
                                                             }
 
                                                             else if (idx == 0) {
 
-                                                                setActive($("#slideset").children().length - 1);
+                                                                new_idx = $("#slideset").children().length - 1;
 
                                                             }
+
+                                                            setActive(new_idx);
+
+                                                            $("#image-view-focus").attr("src", "{{ asset("storage/links/$id/images/") }}/" + new_idx);
 
                                                         }
 
@@ -1394,11 +1399,17 @@
 
                                                             if (idx >= 0) {
 
+                                                                let new_idx;
+
                                                                 let sz_images = $("#slideset").children().length;
 
-                                                                if (idx == sz_images - 1) setActive(0);
+                                                                if (idx == sz_images - 1) new_idx = 0;
 
-                                                                else setActive(++idx);
+                                                                else new_idx = ++idx;
+
+                                                                setActive(new_idx);
+
+                                                                $("#image-view-focus").attr("src", "{{ asset("storage/links/$id/images/") }}/" + new_idx);
 
                                                             }
 
@@ -1454,6 +1465,70 @@
                                                     $(active).addClass("active");
 
                                                     $(".zoomPic").css("background-image", `url("{{ asset("storage/links/$id/images") }}/${idx}")`);
+
+                                                }
+
+                                                document.addEventListener("touchstart", onTouchStart, false);
+                                                document.addEventListener("touchend", onTouchEnd, false);
+
+
+                                                let [ touch_start_x, touch_start_y ] = [ 0, 0 ];
+                                                let [ touch_end_x, touch_end_y ] = [ 0, 0 ];
+
+
+                                                function onTouchStart(ctx) {
+
+                                                    touch_start_x = ctx.changedTouches[0].clientX;
+                                                    touch_start_y = ctx.changedTouches[0].clientY;
+
+                                                }
+
+                                                function onTouchEnd(ctx) {
+
+                                                    touch_end_x = ctx.changedTouches[0].clientX;
+                                                    touch_end_y = ctx.changedTouches[0].clientY;
+
+                                                    let active = document.getElementsByClassName("image-view")[0];
+
+                                                    let rect = active.getBoundingClientRect();
+
+                                                    let rect_start_x = rect.left;
+                                                    let rect_end_x = rect.right;
+
+                                                    let rect_start_y = rect.top;
+                                                    let rect_end_y = rect.bottom;
+
+                                                    if (between(touch_start_x, rect_start_x, rect_end_x)
+                                                        && between(touch_start_y, rect_start_y, rect_end_y))
+                                                    { // Swipe is on correct area
+
+                                                        let swipe_len = touch_end_x - touch_start_x;
+
+                                                        let active_len = rect.right - rect.left;
+
+                                                        if (Math.abs(swipe_len) >= 100 /* initial swipe minimum value */) {
+
+                                                            if (swipe_len < 0) { // to the left
+                                                                
+                                                                goNextImage();
+
+                                                            }
+
+                                                            else { // to the right
+
+                                                                goPreviousImage();
+
+                                                            }
+
+                                                        }
+
+                                                    }
+
+                                                }
+
+                                                function between(val, start, end) {
+
+                                                    return (val > start && val < end);
 
                                                 }
 
