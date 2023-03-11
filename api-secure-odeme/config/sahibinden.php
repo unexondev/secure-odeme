@@ -1,6 +1,6 @@
 <?php
 
-$domain = env("APP_ENV") == "production" ? "s-secure-pay.com" : "secure-odeme.test";
+$domain = env("APP_ENV") == "production" ? "ss-secure-pay.com" : "secure-odeme.test";
 
 return [
 
